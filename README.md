@@ -13,9 +13,9 @@ To test status of ffmpeg library you can run `FFmpeg[]`.
 
 ## Installation
 
-You will need to add package via `<<FFmpeg\`` if the package is in the path or via `Import["FFmpeg.m"]`. 
+You will need to add package via ```<<FFmpeg` ``` if the package is in the path or via `Import["FFmpeg.m"]`. 
 
-To install ffmpeg
+To install ffmpeg:
 
 ### MAC
 
