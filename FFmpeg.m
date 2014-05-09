@@ -65,7 +65,7 @@ FFmpeg[] :=
     (*second option - test if working*)
     If[ StringMatchQ[ 
         ToString @ ReadLine @ OpenRead["!" ~~ ffmpeg ~~ " -version", BinaryFormat -> True],
-        "ffmpeg version"],
+        "ffmpeg version*"],
       Print @ "ffmpeg was found and is functional",
       Print @ ("ffmpeg does not respond correctly. Please check the path: " <> ToString@ffmpeg) 
     ]
