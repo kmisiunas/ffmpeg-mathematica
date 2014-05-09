@@ -44,6 +44,12 @@ FFmpeg::usage =
 (* ::Section:: *)
 (*Package Implementations*)
 
+(* options associated*)
+Options[FFmpeg] = { 
+  "Colors" -> 3 (*number of color channels*),
+  "ColorCommand" -> "rgb24" (*indicator for "-pix_fmt" parameter: gray/rgb24*)
+}
+
 
 Begin["`Private`"]
 
@@ -74,11 +80,15 @@ Switch[ $OperatingSystem,
  (*reads stream for next frame*)
 FFGetNextFrame[stream_, dim_] := 
   Image[
-    Partition[ BinaryReadList[stream, "Byte", dim[[1]]*dim[[2]] ], dim[[1]] ]
+    Partition[ 
+      Partition[ 
+        BinaryReadList[stream, "Byte", OptionValue[FFmpeg, "Colors"]*dim[[1]]*dim[[2]] ]
+        , OptionValue[FFmpeg, "Colors"] ]
+      , dim[[1]] ]
   , "Byte"]
 
 (*skip frame*)
-FFSkipFrame[stream_, dim_, n_Integer:1] := Skip[ stream, Byte, n*dim[[1]]*dim[[2]] ]
+FFSkipFrame[stream_, dim_, n_Integer:1] := Skip[ stream, Byte, OptionValue[FFmpeg, "Colors"]*n*dim[[1]]*dim[[2]] ]
 
 (*makes a stream*)
 FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer:1] := 
@@ -89,7 +99,10 @@ FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer:1] :=
   st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ file ~~ 
     " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
     " -frames:v " ~~ ToString@noOfFrames ~~
-    " -loglevel quiet -f image2pipe -pix_fmt gray -vcodec rawvideo -", 
+    " -loglevel quiet" ~~ 
+    " -f image2pipe " ~~ 
+    " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~ 
+    " -vcodec rawvideo -", 
     BinaryFormat -> True];
     (* FFSkipFrame[st, dim, at-1]; *)
   {st, at, dim}
