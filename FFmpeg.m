@@ -40,6 +40,14 @@ FFmpeg::usage =
   "FFmpeg[] returns status of the plug-in. 
   |If text argument is supplied it is assumed to be path to ffmpeg."
 
+FFInputStreamAt::usage = 
+  ""
+
+FFGetNextFrame::usage = 
+  ""
+
+FFSkipFrame::usage = 
+  ""
 
 (* ::Section:: *)
 (*Package Implementations*)
@@ -91,21 +99,39 @@ FFGetNextFrame[stream_, dim_] :=
 FFSkipFrame[stream_, dim_, n_Integer:1] := Skip[ stream, Byte, OptionValue[FFmpeg, "Colors"]*n*dim[[1]]*dim[[2]] ]
 
 (*makes a stream*)
-FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer:1] := 
+FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
   Module[{fps, startAtSec, st, dim},
   fps = Import[file, "FrameRate"];
   dim = Import[file, "ImageSize"];
   startAtSec = (at-1) / fps;
   st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ file ~~ 
     " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
-    " -frames:v " ~~ ToString@noOfFrames ~~
+    " -frames:v " ~~ ToString@noOfFrames ~~ 
     " -loglevel quiet" ~~ 
     " -f image2pipe " ~~ 
     " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~ 
     " -vcodec rawvideo -", 
     BinaryFormat -> True];
     (* FFSkipFrame[st, dim, at-1]; *)
-  {st, at, dim}
+  {st, dim}
+]
+
+(*makes a stream*)
+FFInputStreamAt[file_String, at_Integer, All] := 
+  Module[{fps, startAtSec, st, dim},
+  fps = Import[file, "FrameRate"];
+  dim = Import[file, "ImageSize"];
+  startAtSec = (at-1) / fps;
+  st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ file ~~ 
+    " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
+    (*" -frames:v " ~~ ToString@noOfFrames ~~ *)
+    " -loglevel quiet" ~~ 
+    " -f image2pipe " ~~ 
+    " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~ 
+    " -vcodec rawvideo -", 
+    BinaryFormat -> True];
+    (* FFSkipFrame[st, dim, at-1]; *)
+  {st, dim}
 ]
 
 (*makes a stream*)
@@ -120,21 +146,21 @@ FFInputStreamAtNew[file_String, at_Integer, noOfFrames_Integer:1] :=
     " -loglevel quiet -f image2pipe -pix_fmt gray -vcodec rawvideo -", 
     BinaryFormat -> True];
   FFSkipFrame[st, dim, at-1];
-  {st, at, dim}
+  {st, dim}
 ]
 
 (*read one frame*)
-FFGetOneFrame[path_String, frame_Integer] := Module[ {st, at, dim, img},
-  {st, at, dim} = FFInputStreamAt[path, frame];
+FFGetOneFrame[path_String, frame_Integer] := Module[ {st, dim, img},
+  {st, dim} = FFInputStreamAt[path, frame, 1];
   img = FFGetNextFrame[st, dim];
   Close[st];
   img
 ]
 
 (*read multiple frames*)
-FFGetOneFrame[path_String, frames_List] := Module[ {order, st, at, dim, res, ReadFrames},
+FFGetOneFrame[path_String, frames_List] := Module[ {order, st, dim, res, ReadFrames},
   order = Sort @ frames;
-  {st, at, dim} = FFInputStreamAt[path, First@order, Last@order - First@order+1]; 
+  {st, dim} = FFInputStreamAt[path, First@order, Last@order - First@order+1]; 
   ReadFrames[] := Reap@Do[
     If[ MemberQ[order,f],
       Sow @ FFGetNextFrame[st, dim] ,
@@ -151,9 +177,9 @@ FFGetOneFrame[path_String, frames_List] := Module[ {order, st, at, dim, res, Rea
 ]
 
 (*read multiple frames - experimental*)
-FFGetOneFrameNew[path_String, frames_List] := Module[ {order, st, at, dim, res},
+FFGetOneFrameNew[path_String, frames_List] := Module[ {order, st,  dim, res},
   order = Sort @ frames;
-  {st, at, dim} = FFInputStreamAtNew[path, First@order, Last@order - First@order+1];
+  {st, dim} = FFInputStreamAtNew[path, First@order, Last@order - First@order+1];
   res = Reap@Do[
     If[ MemberQ[order,f],
       Sow @ FFGetNextFrame[st, dim] ,
