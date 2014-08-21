@@ -1,10 +1,5 @@
 (* ::Package:: *)
 
-(* ::Title:: *)
-(*ffmpeg video IO*)
-
-
-(* ::Subtitle:: *)
 (* Authors:
    Karolis Misiunas (km558@cam.ac.uk) 
 
@@ -12,6 +7,9 @@
 
 
 (* ::Text:: *)
+(**)
+
+
 (*The package provides methods for importing/exporting video using ffmpeg library.
   Problem with Mathematica's Import function is artefacts it produced using QuickTime.
   The aim of the library is to be as compatible as possible with original Mathematica's
@@ -26,7 +24,8 @@
 (* Package Declarations*)
 
 
-BeginPackage["FFmpeg`"]
+BeginPackage["FFmpeg`"];
+
 
 FFImport::usage = 
 	"FFImport[\"file\", elements] loads the parameters necessary for the Import.
@@ -49,8 +48,7 @@ FFGetNextFrame::usage =
 FFSkipFrame::usage = 
   ""
 
-(* ::Section:: *)
-(*Package Implementations*)
+
 
 (* options associated*)
 Options[FFmpeg] = { 
@@ -59,7 +57,15 @@ Options[FFmpeg] = {
 }
 
 
+(* ::Section:: *)
+(*Package Implementations*)
+
+
 Begin["`Private`"]
+
+
+(* ::Subsection::Closed:: *)
+(*FFmpeg Function*)
 
 
 (*set the path to ffmpeg*)
@@ -84,6 +90,11 @@ Switch[ $OperatingSystem,
   "MacOSX",  FFmpeg @ "/usr/local/bin/ffmpeg",
   "Windows", FFmpeg @ "ffmpeg.exe",
   "Linux",   FFmpeg @ "ffmpeg"];
+
+
+(* ::Subsection::Closed:: *)
+(*FFmpeg Implementation*)
+
 
  (*reads stream for next frame*)
 FFGetNextFrame[stream_, dim_] := 
@@ -193,15 +204,90 @@ FFGetOneFrameNew[path_String, frames_List] := Module[ {order, st,  dim, res},
 ]
 
 
+(* ::Subsection:: *)
+(*FFprobe Function/Implementation*)
+
+
+(*set the path to ffmpeg*)
+FFprobe[path_String] := (ffprobe = path;);
+
+
+(*returns status of ffmpeg.*)
+(*todo: on windows it responds, but does not checkout.*)
+FFprobe[] := 
+  If[ !StringQ@ffprobe,
+    Print @ "The path to ffprobe is unknown. Use FFprobe[\"path\"] to set it.",
+    (*second option - test if working*)
+    If[ StringMatchQ[ 
+        ToString @ ReadLine @ OpenRead["!" ~~ ffprobe ~~ " -version", BinaryFormat -> True],
+        "ffprobe version*"],
+      Print @ "ffprobe was found and is functional",
+      Print @ ("ffprobe does not respond correctly. Please check the path: " <> ToString@ffprobe) 
+    ]
+  ];
+
+(*run on loading - default path*)
+Switch[ $OperatingSystem, 
+  "MacOSX",  FFprobe @ "/usr/local/bin/ffprobe",
+  "Windows", FFprobe @ "ffprobe.exe",
+  "Linux",   FFprobe @ "ffprobe"];
+
+
+FFProbe[file_String, streamCodec_String, targetVariable_String] := 
+		FFProbe[file, streamCodec, {targetVariable}][[1]];
+
+
+FFProbe[file_String, streamCodec_String, {targetVariables__String}] := 
+Module[ {tempFile, tempOutput},
+  tempFile = FileNameJoin[{$TemporaryDirectory,"tempffprobe.json"}];
+  Run[ffprobe <>
+		" -print_format json -show_format -show_streams \"" <> 
+	    file <> 
+		"\" > \"" <> 
+		tempFile <>
+		"\""
+	];
+	tempOutput=Import[tempFile];
+	tempOutput = Cases[("streams" /. tempOutput),{___, "codec_type"->streamCodec, ___}];
+	If[ Length[tempOutput] >= 1,
+		ToExpression[{targetVariables} /. tempOutput[[1]]],
+		Message[FFGetFrameRate::noStream, streamCodec, file]; {}
+	]
+];
+
+FFProbe::noStream = "Could not find `1` stream in file `2`.";
+
+
+FFGetFrameRate[file_String] := FFProbe[file, "video", "r_frame_rate"];
+
+
+FFGetDuration[file_String] := FFProbe[file, "video", "duration"];
+
+
+FFGetImageSize[file_String] := FFProbe[file, "video", {"width","height"}];
+
+
+(* ::Subsection:: *)
+(*FFImport Function (putting everything together)*)
+
+
 (* Importing function*)
 FFImport[path_String, elements_] := Switch[ elements, 
   {"Frames", _Integer}, FFGetOneFrame[ path, elements[[2]] ],
   {"Frames", _List}, FFGetOneFrame[path, elements[[2]] ],
   {"Frames", _List, True}, FFGetOneFrameNew[path, elements[[2]] ], (*experimental*)
+  "FrameRate", FFGetFrameRate[path],
+  "ImageSize", FFGetImageSize[path],
+  "Duration", FFGetDuration[path],
   _, Import[path, elements]
-]
+];
 
-FFExport[path_String, expr_] := Print @ "not implemented"
+FFExport[path_String, expr_] := Print @ "not implemented";
+
+
+(* ::Section:: *)
+(*Package Close*)
+
 
 End[ ]
 

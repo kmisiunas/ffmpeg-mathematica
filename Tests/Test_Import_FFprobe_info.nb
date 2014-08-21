@@ -1,0 +1,649 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     25500,        640]
+NotebookOptionsPosition[     23203,        552]
+NotebookOutlinePosition[     23546,        567]
+CellTagsIndexPosition[     23503,        564]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["FFMpeg ffprobe - related tests", "Title",
+ CellChangeTimes->{{3.6176012593432617`*^9, 3.617601276687254*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileNameJoin", "[", 
+  RowBox[{"{", 
+   RowBox[{"$TemporaryDirectory", ",", "\"\<tempFFmpeg.json\>\""}], "}"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.61744699212882*^9, 3.617447081937957*^9}, {
+  3.6174616745166044`*^9, 3.617461706018406*^9}, {3.6174622900288095`*^9, 
+  3.617462290431833*^9}}],
+
+Cell[BoxData["\<\"C:\\\\Users\\\\Kenta\\\\AppData\\\\Local\\\\Temp\\\\\
+tempFFmpeg.json\"\>"], "Output",
+ CellChangeTimes->{{3.617446995715025*^9, 3.617447018845348*^9}, {
+   3.6174470497361145`*^9, 3.6174470822489743`*^9}, {3.6174616940937243`*^9, 
+   3.6174617062524195`*^9}, 3.6174622909828644`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["ffprobe (function path)", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.6176011256856174`*^9, 3.617601127236706*^9}, {3.617601339411842*^9, 
+  3.61760134305205*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["$OperatingSystem"], "Input"],
+
+Cell[BoxData["\<\"Windows\"\>"], "Output",
+ CellChangeTimes->{3.6176024207536907`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["FFmpeg`Private`ffprobe"], "Input",
+ CellChangeTimes->{{3.617462187419941*^9, 3.617462188838022*^9}, {
+  3.6176024012465754`*^9, 3.617602406283863*^9}}],
+
+Cell[BoxData["\<\"ffprobe.exe\"\>"], "Output",
+ CellChangeTimes->{
+  3.6174621893320503`*^9, {3.6176013443701253`*^9, 3.617601350462474*^9}, 
+   3.6176024082679768`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[OpenCurlyDoubleQuote]FrameRate\[CloseCurlyDoubleQuote]", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.6176011256856174`*^9, 3.617601127236706*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6176002355587053`*^9, 3.617600240445985*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{
+  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
+   "\"\<FrameRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+  3.61760113482414*^9, 3.6176011362632227`*^9}}],
+
+Cell[BoxData["10.`"], "Output",
+ CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
+  3.617601101837253*^9, 3.6176011424545765`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{
+  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
+   "\"\<FrameRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", "10", "}"}]], "Output",
+ CellChangeTimes->{3.6176011050024347`*^9, 3.6176011454907503`*^9, 
+  3.617601220804058*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[OpenCurlyDoubleQuote]ImageSize\[CloseCurlyDoubleQuote]", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6176002355587053`*^9, 3.617600240445985*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{
+  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
+   "\"\<ImageSize\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"160", ",", "120"}], "}"}]], "Output",
+ CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
+  3.617601101837253*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{
+  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
+   "\"\<ImageSize\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+  3.6176010966709576`*^9, 3.617601097911029*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"160", ",", "120"}], "}"}]], "Output",
+ CellChangeTimes->{3.6176011050024347`*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[OpenCurlyDoubleQuote]Duration\[CloseCurlyDoubleQuote]", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.617602435980562*^9, 3.6176024372676353`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6176002355587053`*^9, 3.617600240445985*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{
+  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
+   "\"\<Duration\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+  3.617602442733948*^9, 3.6176024441170273`*^9}}],
+
+Cell[BoxData["8.9`"], "Output",
+ CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
+  3.617601101837253*^9, 3.6176024503573847`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{
+  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
+   "\"\<Duration\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+  3.6176010966709576`*^9, 3.617601097911029*^9}, {3.617602545205809*^9, 
+  3.617602546211867*^9}}],
+
+Cell[BoxData["8.9`"], "Output",
+ CellChangeTimes->{3.6176011050024347`*^9, 3.6176025529172506`*^9, 
+  3.617602584587062*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Testing ffprobe output parsing", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.617601304011817*^9, 3.617601312891325*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"tempOutput", " ", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\"\<streams\>\"", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+          "\"\<codec_tag_string\>\"", "\[Rule]", "\"\<a[1][0][0]\>\""}], ",", 
+          RowBox[{"\"\<codec_tag\>\"", "\[Rule]", "\"\<0x0161\>\""}], ",", 
+          RowBox[{"\"\<r_frame_rate\>\"", "\[Rule]", "\"\<0/0\>\""}], ",", 
+          RowBox[{"\"\<codec_time_base\>\"", "\[Rule]", "\"\<1/44100\>\""}], 
+          ",", 
+          RowBox[{
+          "\"\<codec_long_name\>\"", "\[Rule]", 
+           "\"\<Windows Media Audio 2\>\""}], ",", 
+          RowBox[{"\"\<bits_per_sample\>\"", "\[Rule]", "0"}], ",", 
+          RowBox[{"\"\<codec_type\>\"", "\[Rule]", "\"\<audio\>\""}], ",", 
+          RowBox[{"\"\<tags\>\"", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<language\>\"", "\[Rule]", "\"\<eng\>\""}], "}"}]}], 
+          ",", 
+          RowBox[{"\"\<bit_rate\>\"", "\[Rule]", "\"\<160040\>\""}], ",", 
+          RowBox[{"\"\<channels\>\"", "\[Rule]", "2"}], ",", 
+          RowBox[{"\"\<index\>\"", "\[Rule]", "0"}], ",", 
+          RowBox[{"\"\<codec_name\>\"", "\[Rule]", "\"\<wmav2\>\""}], ",", 
+          RowBox[{"\"\<sample_fmt\>\"", "\[Rule]", "\"\<fltp\>\""}], ",", 
+          RowBox[{"\"\<duration\>\"", "\[Rule]", "\"\<4619.780000\>\""}], ",", 
+          RowBox[{"\"\<sample_rate\>\"", "\[Rule]", "\"\<44100\>\""}], ",", 
+          RowBox[{"\"\<avg_frame_rate\>\"", "\[Rule]", "\"\<0/0\>\""}], ",", 
+          RowBox[{"\"\<time_base\>\"", "\[Rule]", "\"\<1/1000\>\""}], ",", 
+          RowBox[{"\"\<start_pts\>\"", "\[Rule]", "0"}], ",", 
+          RowBox[{"\"\<start_time\>\"", "\[Rule]", "\"\<0.000000\>\""}], ",", 
+          RowBox[{"\"\<disposition\>\"", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\"\<lyrics\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<forced\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<default\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<original\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<clean_effects\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<comment\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<dub\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<attached_pic\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<karaoke\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<visual_impaired\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<hearing_impaired\>\"", "\[Rule]", "0"}]}], "}"}]}], 
+          ",", 
+          RowBox[{"\"\<duration_ts\>\"", "\[Rule]", "4619780"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\"\<codec_time_base\>\"", "\[Rule]", "\"\<1/1000\>\""}], 
+          ",", 
+          RowBox[{
+          "\"\<codec_long_name\>\"", "\[Rule]", 
+           "\"\<Windows Media Video 9\>\""}], ",", 
+          RowBox[{"\"\<pix_fmt\>\"", "\[Rule]", "\"\<yuv420p\>\""}], ",", 
+          RowBox[{"\"\<has_b_frames\>\"", "\[Rule]", "0"}], ",", 
+          RowBox[{"\"\<codec_type\>\"", "\[Rule]", "\"\<video\>\""}], ",", 
+          RowBox[{
+          "\"\<display_aspect_ratio\>\"", "\[Rule]", "\"\<25:14\>\""}], ",", 
+          RowBox[{"\"\<r_frame_rate\>\"", "\[Rule]", "\"\<15/1\>\""}], ",", 
+          RowBox[{"\"\<codec_tag_string\>\"", "\[Rule]", "\"\<WMV3\>\""}], 
+          ",", 
+          RowBox[{"\"\<codec_tag\>\"", "\[Rule]", "\"\<0x33564d57\>\""}], ",", 
+          RowBox[{"\"\<index\>\"", "\[Rule]", "1"}], ",", 
+          RowBox[{"\"\<height\>\"", "\[Rule]", "448"}], ",", 
+          RowBox[{"\"\<codec_name\>\"", "\[Rule]", "\"\<wmv3\>\""}], ",", 
+          RowBox[{"\"\<profile\>\"", "\[Rule]", "\"\<Main\>\""}], ",", 
+          RowBox[{"\"\<width\>\"", "\[Rule]", "800"}], ",", 
+          RowBox[{"\"\<sample_aspect_ratio\>\"", "\[Rule]", "\"\<1:1\>\""}], 
+          ",", 
+          RowBox[{"\"\<duration_ts\>\"", "\[Rule]", "4619780"}], ",", 
+          RowBox[{"\"\<level\>\"", "\[Rule]", 
+           RowBox[{"-", "99"}]}], ",", 
+          RowBox[{"\"\<avg_frame_rate\>\"", "\[Rule]", "\"\<0/0\>\""}], ",", 
+          RowBox[{"\"\<time_base\>\"", "\[Rule]", "\"\<1/1000\>\""}], ",", 
+          RowBox[{"\"\<start_pts\>\"", "\[Rule]", "186"}], ",", 
+          RowBox[{"\"\<start_time\>\"", "\[Rule]", "\"\<0.186000\>\""}], ",", 
+          RowBox[{"\"\<duration\>\"", "\[Rule]", "\"\<4619.780000\>\""}], ",", 
+          RowBox[{"\"\<bit_rate\>\"", "\[Rule]", "\"\<1451149\>\""}], ",", 
+          RowBox[{"\"\<disposition\>\"", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\"\<lyrics\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<forced\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<default\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<original\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<clean_effects\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<comment\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<dub\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<attached_pic\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<karaoke\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<visual_impaired\>\"", "\[Rule]", "0"}], ",", 
+             RowBox[{"\"\<hearing_impaired\>\"", "\[Rule]", "0"}]}], "}"}]}], 
+          ",", 
+          RowBox[{"\"\<tags\>\"", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"\"\<language\>\"", "\[Rule]", "\"\<eng\>\""}], "}"}]}]}],
+          "}"}]}], "}"}]}], ",", 
+     RowBox[{"\"\<format\>\"", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<tags\>\"", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<WMFSDKNeeded\>\"", "\[Rule]", "\"\<0.0.0.0000\>\""}], 
+           ",", 
+           RowBox[{"\"\<IsVBR\>\"", "\[Rule]", "\"\<0\>\""}], ",", 
+           RowBox[{
+           "\"\<DeviceConformanceTemplate\>\"", "\[Rule]", "\"\<MP@HL\>\""}], 
+           ",", 
+           RowBox[{
+           "\"\<WMFSDKVersion\>\"", "\[Rule]", "\"\<12.0.7601.17514\>\""}]}], 
+          "}"}]}], ",", 
+        RowBox[{"\"\<nb_programs\>\"", "\[Rule]", "0"}], ",", 
+        RowBox[{"\"\<nb_streams\>\"", "\[Rule]", "2"}], ",", 
+        RowBox[{
+        "\"\<filename\>\"", "\[Rule]", 
+         "\"\<U:\\\\VSDdata\\\\project.SPP\\\\SPP.Coulb1\\\\SPP019\\\\2014-08-\
+11 15-25-29.942.wmv\>\""}], ",", 
+        RowBox[{"\"\<size\>\"", "\[Rule]", "\"\<867273177\>\""}], ",", 
+        RowBox[{"\"\<format_name\>\"", "\[Rule]", "\"\<asf\>\""}], ",", 
+        RowBox[{"\"\<bit_rate\>\"", "\[Rule]", "\"\<1501782\>\""}], ",", 
+        RowBox[{
+        "\"\<format_long_name\>\"", "\[Rule]", 
+         "\"\<ASF (Advanced / Active Streaming Format)\>\""}], ",", 
+        RowBox[{"\"\<start_time\>\"", "\[Rule]", "\"\<0.000000\>\""}], ",", 
+        RowBox[{"\"\<duration\>\"", "\[Rule]", "\"\<4619.966000\>\""}], ",", 
+        RowBox[{"\"\<probe_score\>\"", "\[Rule]", "100"}]}], "}"}]}]}], 
+    "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6174621528659644`*^9, 3.6174621565041723`*^9}, {
+  3.6174624197352285`*^9, 3.6174624243974953`*^9}, {3.6174629754330125`*^9, 
+  3.617462978203171*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6174629723318353`*^9, 3.617462972356837*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\"\<streams\>\"", " ", "/.", " ", "tempOutput"}]], "Input",
+ CellChangeTimes->{{3.617462429135766*^9, 3.617462491804351*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\<\"codec_tag_string\"\>", "\[Rule]", "\<\"a[1][0][0]\"\>"}], 
+     ",", 
+     RowBox[{"\<\"codec_tag\"\>", "\[Rule]", "\<\"0x0161\"\>"}], ",", 
+     RowBox[{"\<\"r_frame_rate\"\>", "\[Rule]", "\<\"0/0\"\>"}], ",", 
+     RowBox[{"\<\"codec_time_base\"\>", "\[Rule]", "\<\"1/44100\"\>"}], ",", 
+     RowBox[{"\<\"codec_long_name\"\>", 
+      "\[Rule]", "\<\"Windows Media Audio 2\"\>"}], ",", 
+     RowBox[{"\<\"bits_per_sample\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"codec_type\"\>", "\[Rule]", "\<\"audio\"\>"}], ",", 
+     RowBox[{"\<\"tags\"\>", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\<\"language\"\>", "\[Rule]", "\<\"eng\"\>"}], "}"}]}], ",", 
+     RowBox[{"\<\"bit_rate\"\>", "\[Rule]", "\<\"160040\"\>"}], ",", 
+     RowBox[{"\<\"channels\"\>", "\[Rule]", "2"}], ",", 
+     RowBox[{"\<\"index\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"codec_name\"\>", "\[Rule]", "\<\"wmav2\"\>"}], ",", 
+     RowBox[{"\<\"sample_fmt\"\>", "\[Rule]", "\<\"fltp\"\>"}], ",", 
+     RowBox[{"\<\"duration\"\>", "\[Rule]", "\<\"4619.780000\"\>"}], ",", 
+     RowBox[{"\<\"sample_rate\"\>", "\[Rule]", "\<\"44100\"\>"}], ",", 
+     RowBox[{"\<\"avg_frame_rate\"\>", "\[Rule]", "\<\"0/0\"\>"}], ",", 
+     RowBox[{"\<\"time_base\"\>", "\[Rule]", "\<\"1/1000\"\>"}], ",", 
+     RowBox[{"\<\"start_pts\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"start_time\"\>", "\[Rule]", "\<\"0.000000\"\>"}], ",", 
+     RowBox[{"\<\"disposition\"\>", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\<\"lyrics\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"forced\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"default\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"original\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"clean_effects\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"comment\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"dub\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"attached_pic\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"karaoke\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"visual_impaired\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"hearing_impaired\"\>", "\[Rule]", "0"}]}], "}"}]}], ",", 
+     RowBox[{"\<\"duration_ts\"\>", "\[Rule]", "4619780"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\<\"codec_time_base\"\>", "\[Rule]", "\<\"1/1000\"\>"}], ",", 
+     RowBox[{"\<\"codec_long_name\"\>", 
+      "\[Rule]", "\<\"Windows Media Video 9\"\>"}], ",", 
+     RowBox[{"\<\"pix_fmt\"\>", "\[Rule]", "\<\"yuv420p\"\>"}], ",", 
+     RowBox[{"\<\"has_b_frames\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"codec_type\"\>", "\[Rule]", "\<\"video\"\>"}], ",", 
+     RowBox[{"\<\"display_aspect_ratio\"\>", "\[Rule]", "\<\"25:14\"\>"}], 
+     ",", 
+     RowBox[{"\<\"r_frame_rate\"\>", "\[Rule]", "\<\"15/1\"\>"}], ",", 
+     RowBox[{"\<\"codec_tag_string\"\>", "\[Rule]", "\<\"WMV3\"\>"}], ",", 
+     RowBox[{"\<\"codec_tag\"\>", "\[Rule]", "\<\"0x33564d57\"\>"}], ",", 
+     RowBox[{"\<\"index\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"height\"\>", "\[Rule]", "448"}], ",", 
+     RowBox[{"\<\"codec_name\"\>", "\[Rule]", "\<\"wmv3\"\>"}], ",", 
+     RowBox[{"\<\"profile\"\>", "\[Rule]", "\<\"Main\"\>"}], ",", 
+     RowBox[{"\<\"width\"\>", "\[Rule]", "800"}], ",", 
+     RowBox[{"\<\"sample_aspect_ratio\"\>", "\[Rule]", "\<\"1:1\"\>"}], ",", 
+     RowBox[{"\<\"duration_ts\"\>", "\[Rule]", "4619780"}], ",", 
+     RowBox[{"\<\"level\"\>", "\[Rule]", 
+      RowBox[{"-", "99"}]}], ",", 
+     RowBox[{"\<\"avg_frame_rate\"\>", "\[Rule]", "\<\"0/0\"\>"}], ",", 
+     RowBox[{"\<\"time_base\"\>", "\[Rule]", "\<\"1/1000\"\>"}], ",", 
+     RowBox[{"\<\"start_pts\"\>", "\[Rule]", "186"}], ",", 
+     RowBox[{"\<\"start_time\"\>", "\[Rule]", "\<\"0.186000\"\>"}], ",", 
+     RowBox[{"\<\"duration\"\>", "\[Rule]", "\<\"4619.780000\"\>"}], ",", 
+     RowBox[{"\<\"bit_rate\"\>", "\[Rule]", "\<\"1451149\"\>"}], ",", 
+     RowBox[{"\<\"disposition\"\>", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\<\"lyrics\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"forced\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"default\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"original\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"clean_effects\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"comment\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"dub\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"attached_pic\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"karaoke\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"visual_impaired\"\>", "\[Rule]", "0"}], ",", 
+        RowBox[{"\<\"hearing_impaired\"\>", "\[Rule]", "0"}]}], "}"}]}], ",", 
+     RowBox[{"\<\"tags\"\>", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\<\"language\"\>", "\[Rule]", "\<\"eng\"\>"}], "}"}]}]}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6174624489188976`*^9, 3.617462492096367*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Cases", "[", " ", 
+   RowBox[{
+    RowBox[{"\"\<streams\>\"", " ", "/.", " ", "tempOutput"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"___", ",", " ", 
+      RowBox[{"\"\<codec_type\>\"", "\[Rule]", "\"\<video\>\""}], ",", " ", 
+      "___"}], "}"}]}], "]"}], "[", 
+  RowBox[{"[", "1", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.617462429135766*^9, 3.617462532243664*^9}, {
+  3.617462591748067*^9, 3.6174626231498632`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"codec_time_base\"\>", "\[Rule]", "\<\"1/1000\"\>"}], ",", 
+   RowBox[{"\<\"codec_long_name\"\>", 
+    "\[Rule]", "\<\"Windows Media Video 9\"\>"}], ",", 
+   RowBox[{"\<\"pix_fmt\"\>", "\[Rule]", "\<\"yuv420p\"\>"}], ",", 
+   RowBox[{"\<\"has_b_frames\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"codec_type\"\>", "\[Rule]", "\<\"video\"\>"}], ",", 
+   RowBox[{"\<\"display_aspect_ratio\"\>", "\[Rule]", "\<\"25:14\"\>"}], ",", 
+   RowBox[{"\<\"r_frame_rate\"\>", "\[Rule]", "\<\"15/1\"\>"}], ",", 
+   RowBox[{"\<\"codec_tag_string\"\>", "\[Rule]", "\<\"WMV3\"\>"}], ",", 
+   RowBox[{"\<\"codec_tag\"\>", "\[Rule]", "\<\"0x33564d57\"\>"}], ",", 
+   RowBox[{"\<\"index\"\>", "\[Rule]", "1"}], ",", 
+   RowBox[{"\<\"height\"\>", "\[Rule]", "448"}], ",", 
+   RowBox[{"\<\"codec_name\"\>", "\[Rule]", "\<\"wmv3\"\>"}], ",", 
+   RowBox[{"\<\"profile\"\>", "\[Rule]", "\<\"Main\"\>"}], ",", 
+   RowBox[{"\<\"width\"\>", "\[Rule]", "800"}], ",", 
+   RowBox[{"\<\"sample_aspect_ratio\"\>", "\[Rule]", "\<\"1:1\"\>"}], ",", 
+   RowBox[{"\<\"duration_ts\"\>", "\[Rule]", "4619780"}], ",", 
+   RowBox[{"\<\"level\"\>", "\[Rule]", 
+    RowBox[{"-", "99"}]}], ",", 
+   RowBox[{"\<\"avg_frame_rate\"\>", "\[Rule]", "\<\"0/0\"\>"}], ",", 
+   RowBox[{"\<\"time_base\"\>", "\[Rule]", "\<\"1/1000\"\>"}], ",", 
+   RowBox[{"\<\"start_pts\"\>", "\[Rule]", "186"}], ",", 
+   RowBox[{"\<\"start_time\"\>", "\[Rule]", "\<\"0.186000\"\>"}], ",", 
+   RowBox[{"\<\"duration\"\>", "\[Rule]", "\<\"4619.780000\"\>"}], ",", 
+   RowBox[{"\<\"bit_rate\"\>", "\[Rule]", "\<\"1451149\"\>"}], ",", 
+   RowBox[{"\<\"disposition\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"lyrics\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"forced\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"default\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"original\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"clean_effects\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"comment\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"dub\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"attached_pic\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"karaoke\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"visual_impaired\"\>", "\[Rule]", "0"}], ",", 
+      RowBox[{"\<\"hearing_impaired\"\>", "\[Rule]", "0"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"tags\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\<\"language\"\>", "\[Rule]", "\<\"eng\"\>"}], "}"}]}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.6174626172035227`*^9, 3.6174626235038834`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\"\<r_frame_rate\>\"", " ", "/.", " ", 
+  RowBox[{
+   RowBox[{"Cases", "[", " ", 
+    RowBox[{
+     RowBox[{"\"\<streams\>\"", " ", "/.", " ", "tempOutput"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"___", ",", " ", 
+       RowBox[{"\"\<codec_type\>\"", "\[Rule]", "\"\<video\>\""}], ",", " ", 
+       "___"}], "}"}]}], "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.617462429135766*^9, 3.617462532243664*^9}, {
+  3.617462591748067*^9, 3.617462655332704*^9}}],
+
+Cell[BoxData["\<\"15/1\"\>"], "Output",
+ CellChangeTimes->{3.617462655656722*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ToExpression", "[", 
+  RowBox[{"\"\<r_frame_rate\>\"", " ", "/.", " ", 
+   RowBox[{
+    RowBox[{"Cases", "[", " ", 
+     RowBox[{
+      RowBox[{"\"\<streams\>\"", " ", "/.", " ", "tempOutput"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"___", ",", " ", 
+        RowBox[{"\"\<codec_type\>\"", "\[Rule]", "\"\<video\>\""}], ",", " ", 
+        "___"}], "}"}]}], "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.617462429135766*^9, 3.617462532243664*^9}, {
+  3.617462591748067*^9, 3.61746266610132*^9}}],
+
+Cell[BoxData["15"], "Output",
+ CellChangeTimes->{3.6174626664083376`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{952, 1154},
+WindowMargins->{{0, Automatic}, {Automatic, 1148}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (July 1, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 115, 1, 90, "Title"],
+Cell[CellGroupData[{
+Cell[720, 27, 322, 7, 31, "Input"],
+Cell[1045, 36, 302, 4, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1384, 45, 209, 3, 63, "Section"],
+Cell[1596, 50, 72, 1, 31, "Input"],
+Cell[CellGroupData[{
+Cell[1693, 55, 42, 0, 31, "Input"],
+Cell[1738, 57, 86, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1861, 63, 165, 2, 31, "Input"],
+Cell[2029, 67, 169, 3, 31, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2247, 76, 194, 2, 63, "Section"],
+Cell[2444, 80, 140, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[2609, 86, 270, 6, 31, "Input"],
+Cell[2882, 94, 148, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3067, 101, 298, 6, 31, "Input"],
+Cell[3368, 109, 144, 3, 31, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[3561, 118, 143, 1, 49, "Section"],
+Cell[3707, 121, 140, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[3872, 127, 220, 5, 31, "Input"],
+Cell[4095, 134, 170, 4, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4302, 143, 273, 6, 31, "Input"],
+Cell[4578, 151, 121, 3, 31, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[4748, 160, 193, 2, 49, "Section"],
+Cell[4944, 164, 140, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[5109, 170, 270, 6, 31, "Input"],
+Cell[5382, 178, 148, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5567, 185, 321, 7, 31, "Input"],
+Cell[5891, 194, 124, 2, 64, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6064, 202, 166, 2, 63, "Section"],
+Cell[6233, 206, 7243, 136, 552, "Input"],
+Cell[13479, 344, 94, 1, 31, "Input"],
+Cell[CellGroupData[{
+Cell[13598, 349, 149, 2, 31, "Input"],
+Cell[13750, 353, 5006, 89, 272, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18793, 447, 463, 11, 31, "Input"],
+Cell[19259, 460, 2579, 46, 152, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21875, 511, 522, 12, 31, "Input"],
+Cell[22400, 525, 81, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22518, 531, 569, 13, 52, "Input"],
+Cell[23090, 546, 73, 1, 31, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
