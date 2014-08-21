@@ -5,14 +5,14 @@ Mathematica package for using FFMPEG video library. This package accurately  imp
 
 ## Usage
 
-Mimicking Mathematica's Import function:
-`FFImport[ "file.avi", {"Frames", 1}]` - gives first frame (slow way)
+Mimicking Mathematica's Import function:  
+`FFImport[ "file.avi", {"Frames", 1}]` - gives first frame (slow way)  
 `FFImport[ "file.avi", {"Frames", Range[1,1000]}]` - gives first 1000 frames (fast)
 
-Also supports some property look-up functions using ffprobe:
-`FFImport[ "file.avi", "FrameRate"]` - returns the frame rate of the video
-`FFImport[ "file.avi", "Duration"]` - returns the duration of the video in sec
-`FFImport[ "file.avi", "ImageSize"]` - frame size in pixels
+Also supports some property look-up functions using ffprobe:  
+`FFImport[ "file.avi", "FrameRate"]` - returns the frame rate of the video  
+`FFImport[ "file.avi", "Duration"]` - returns the duration of the video in sec  
+`FFImport[ "file.avi", "ImageSize"]` - frame size in pixels  
 
 
 To test status of ffmpeg library you can run `FFmpeg[]`.
