@@ -1,8 +1,8 @@
 (* ::Package:: *)
 
 (* Authors:
-   Karolis Misiunas (km558@cam.ac.uk) 
-
+   Karolis Misiunas (km558@cam.ac.uk)
+   Kenta Takagaki (github: ktakagaki)
  *)
 
 
@@ -13,40 +13,39 @@
 (*The package provides methods for importing/exporting video using ffmpeg library.
   Problem with Mathematica's Import function is artefacts it produced using QuickTime.
   The aim of the library is to be as compatible as possible with original Mathematica's
-  functions with prefix of FF-...
+  functions with prefix of FF...
 
   Designed for B&W videos.
   *)
 (*Version 1 (2014-05-07) - initial release. *)
+(*Version 1 (2014-08-21) - ffprobe and performace mode *)
 
 
 (* ::Section:: *)
 (* Package Declarations*)
-
 
 BeginPackage["FFmpeg`"];
 
 
 FFImport::usage = 
 	"FFImport[\"file\", elements] loads the parameters necessary for the Import.
-  |  If supplied with {\"Frames\", 1} or {\"Frames\", Range[]} it will use ffmpeg
-  |  to fetch frames. Optimised for loading consecutive frames."
-
-FFExport::usage = 
-  "FFExport[\"file.ext\", expr] will export list of frames as a video file (todo)."
+   If supplied with {\"Frames\", 1} or {\"Frames\", Range[]} it will use ffmpeg
+   to fetch frames. Optimised for loading consecutive frames."
 
 FFmpeg::usage = 
   "FFmpeg[] returns status of the plug-in. 
-  |If text argument is supplied it is assumed to be path to ffmpeg."
+  If text argument is supplied it is assumed to be path to ffmpeg."
 
 FFInputStreamAt::usage = 
-  ""
+  "FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] returns {data stream, dimensions}
+  where \"file\" is the file to be read, \"at\" specifies first frame to read, 
+  and \"noOfFrames\" gives number of frames to read (you can pass All command)."
 
 FFGetNextFrame::usage = 
-  ""
+  "FFGetNextFrame[stream_, dim_] gives image of next frame for specified stream and dimensions."
 
 FFSkipFrame::usage = 
-  ""
+  "FFSkipFrame[stream_, dim_, n_Integer:1] skips n frame of specified ffmpeg stream."
 
 
 
@@ -112,11 +111,12 @@ FFSkipFrame[stream_, dim_, n_Integer:1] := Skip[ stream, Byte, OptionValue[FFmpe
 
 (*makes a stream*)
 FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
-  Module[{fps, startAtSec, st, dim},
-  fps = Import[file, "FrameRate"];
-  dim = Import[file, "ImageSize"];
+  Module[{fps, startAtSec, st, dim, formatedFile},
+  formatedFile =  "\"" ~~ file ~~ "\""; 
+  fps = FFImport[file, "FrameRate"];
+  dim = FFImport[file, "ImageSize"];
   startAtSec = (at-1) / fps;
-  st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ file ~~ 
+  st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ formatedFile ~~ 
     " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
     " -frames:v " ~~ ToString@noOfFrames ~~ 
     " -loglevel quiet" ~~ 
@@ -130,11 +130,12 @@ FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] :=
 
 (*makes a stream*)
 FFInputStreamAt[file_String, at_Integer, All] := 
-  Module[{fps, startAtSec, st, dim},
-  fps = Import[file, "FrameRate"];
-  dim = Import[file, "ImageSize"];
+  Module[{fps, startAtSec, st, dim, formatedFile},
+  formatedFile = "\"" ~~ file ~~ "\"";
+  fps = FFImport[file, "FrameRate"];
+  dim = FFImport[file, "ImageSize"];
   startAtSec = (at-1) / fps;
-  st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ file ~~ 
+  st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ formatedFile ~~ 
     " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
     (*" -frames:v " ~~ ToString@noOfFrames ~~ *)
     " -loglevel quiet" ~~ 
@@ -146,8 +147,8 @@ FFInputStreamAt[file_String, at_Integer, All] :=
   {st, dim}
 ];
 
-(*makes a stream*)
-FFInputStreamAtNew[file_String, at_Integer, noOfFrames_Integer:1] := 
+(*makes a stream - experimental mode*)
+FFInputStreamAtTest[file_String, at_Integer, noOfFrames_Integer:1] := 
   Module[{fps, startAtSec, st, dim},
   fps = Import[file, "FrameRate"];
   dim = Import[file, "ImageSize"];
@@ -190,9 +191,9 @@ FFGetOneFrame[path_String, frames_List] := Module[ {order, st, dim, res, ReadFra
 ]
 
 (*read multiple frames - experimental*)
-FFGetOneFrameNew[path_String, frames_List] := Module[ {order, st,  dim, res},
+FFGetOneFrameTest[path_String, frames_List] := Module[ {order, st,  dim, res},
   order = Sort @ frames;
-  {st, dim} = FFInputStreamAtNew[path, First@order, Last@order - First@order+1];
+  {st, dim} = FFInputStreamAtTest[path, First@order, Last@order - First@order+1];
   res = Reap@Do[
     If[ MemberQ[order,f],
       Sow @ FFGetNextFrame[st, dim] ,
@@ -279,14 +280,13 @@ Module[ {tempFile, tempOutput},
 
 FFProbe::noStream = "Could not find `1` stream in file `2`.";
 
+FFGetFrameRate[file_String] := N @ FFProbe[file, "video", "r_frame_rate"];
 
-FFGetFrameRate[file_String] := FFProbe[file, "video", "r_frame_rate"];
-
-
-FFGetDuration[file_String] := FFProbe[file, "video", "duration"];
-
+FFGetDuration[file_String] := N @ FFProbe[file, "video", "duration"];
 
 FFGetImageSize[file_String] := FFProbe[file, "video", {"width","height"}];
+
+
 
 
 (* ::Subsection:: *)
@@ -297,13 +297,16 @@ FFGetImageSize[file_String] := FFProbe[file, "video", {"width","height"}];
 FFImport[path_String, elements_] := Switch[ elements, 
   {"Frames", _Integer}, FFGetOneFrame[ path, elements[[2]] ],
   {"Frames", _List}, FFGetOneFrame[path, elements[[2]] ],
-  {"Frames", _List, True}, FFGetOneFrameNew[path, elements[[2]] ], (*experimental*)
+  {"Frames", _List, True}, FFGetOneFrameTest[path, elements[[2]] ], (*experimental*)
   "FrameRate", FFGetFrameRate[path],
   "ImageSize", FFGetImageSize[path],
   "Duration", FFGetDuration[path],
   _, Import[path, elements]
 ];
 
+
+
+(* todo in the future *)
 FFExport[path_String, expr_] := Print @ "not implemented";
 
 
