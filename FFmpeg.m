@@ -92,7 +92,7 @@ Switch[ $OperatingSystem,
   "Linux",   FFmpeg @ "ffmpeg"];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*FFmpeg Implementation*)
 
 
@@ -108,6 +108,7 @@ FFGetNextFrame[stream_, dim_] :=
 
 (*skip frame*)
 FFSkipFrame[stream_, dim_, n_Integer:1] := Skip[ stream, Byte, OptionValue[FFmpeg, "Colors"]*n*dim[[1]]*dim[[2]] ]
+
 
 (*makes a stream*)
 FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
@@ -125,7 +126,7 @@ FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] :=
     BinaryFormat -> True];
     (* FFSkipFrame[st, dim, at-1]; *)
   {st, dim}
-]
+];
 
 (*makes a stream*)
 FFInputStreamAt[file_String, at_Integer, All] := 
@@ -143,7 +144,7 @@ FFInputStreamAt[file_String, at_Integer, All] :=
     BinaryFormat -> True];
     (* FFSkipFrame[st, dim, at-1]; *)
   {st, dim}
-]
+];
 
 (*makes a stream*)
 FFInputStreamAtNew[file_String, at_Integer, noOfFrames_Integer:1] := 
@@ -158,7 +159,8 @@ FFInputStreamAtNew[file_String, at_Integer, noOfFrames_Integer:1] :=
     BinaryFormat -> True];
   FFSkipFrame[st, dim, at-1];
   {st, dim}
-]
+];
+
 
 (*read one frame*)
 FFGetOneFrame[path_String, frame_Integer] := Module[ {st, dim, img},
@@ -199,6 +201,26 @@ FFGetOneFrameNew[path_String, frames_List] := Module[ {order, st,  dim, res},
     , {f, First@order, Last@order}
   ];
   Print@"experimental frame grabber - ffmpeg";
+  Close[st];
+  res[[2, 1]] (*extract result from reap*)
+];
+
+
+(*read multiple frames*)
+FFGetAudioSegment[path_String, frames_List] := Module[ {order, st, dim, res, ReadFrames},
+  order = Sort @ frames;
+  {st, dim} = FFInputStreamAt[path, First@order, Last@order - First@order+1]; 
+  ReadFrames[] := Reap@Do[
+    If[ MemberQ[order,f],
+      Sow @ FFGetNextFrame[st, dim] ,
+      FFSkipFrame[st, dim]
+    ]
+    , {f, First@order, Last@order}
+  ];
+  res = Check[ ReadFrames[], 
+                Close[st]; 
+                Print@"Failed loading frames. try again."; 
+                Return@FFGetOneFrame[path, frames]];
   Close[st];
   res[[2, 1]] (*extract result from reap*)
 ]
