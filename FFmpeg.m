@@ -24,6 +24,7 @@
 (* ::Section:: *)
 (* Package Declarations*)
 
+
 BeginPackage["FFmpeg`"];
 
 
@@ -47,6 +48,10 @@ FFGetNextFrame::usage =
 FFSkipFrame::usage = 
   "FFSkipFrame[stream_, dim_, n_Integer:1] skips n frame of specified ffmpeg stream."
 
+
+
+FFProbeLog::usage = 
+  "FFProbeLog[fileName_String] Retrieves output of ffprobe for the file in json format";
 
 
 (* options associated*)
@@ -207,27 +212,41 @@ FFGetOneFrameTest[path_String, frames_List] := Module[ {order, st,  dim, res},
 ];
 
 
-(*read multiple frames*)
-FFGetAudioSegment[path_String, frames_List] := Module[ {order, st, dim, res, ReadFrames},
-  order = Sort @ frames;
-  {st, dim} = FFInputStreamAt[path, First@order, Last@order - First@order+1]; 
-  ReadFrames[] := Reap@Do[
-    If[ MemberQ[order,f],
-      Sow @ FFGetNextFrame[st, dim] ,
-      FFSkipFrame[st, dim]
-    ]
-    , {f, First@order, Last@order}
-  ];
-  res = Check[ ReadFrames[], 
-                Close[st]; 
-                Print@"Failed loading frames. try again."; 
-                Return@FFGetOneFrame[path, frames]];
-  Close[st];
-  res[[2, 1]] (*extract result from reap*)
-]
-
-
 (* ::Subsection:: *)
+(*FFGetSampledSoundList*)
+
+
+(*read audio*)
+FFGetSampledSoundList[path_String] := Module[{tempWavFile(*, tpe, mmaTpe, sampleRate*)},
+	(*sampleRate=FFImport[path, "SampleRate"];
+	tpe=FFImport[path, "SampleFormat"];
+	mmaTpe=Switch[ tpe,
+			x_String/;StringMatchQ[x,"u8*"], "UnsignedInteger8",
+			x_String/;StringMatchQ[x,"s16*"], "Integer16",
+			x_String/;StringMatchQ[x,"s32*"], "Integer32",
+			x_String/;StringMatchQ[x,"flt*"], "Real32",
+			x_String/;StringMatchQ[x,"dbl*"], "Real64",
+			_, tpe="u8"; Message[FFGetSampledSoundList::unkSampleFormat, tpe]; "UnsignedInteger8"
+	];
+	SampledSoundList[
+		BinaryReadList["!" <> ffmpeg <> " -i " <>"\""<> path <> "\"" <>
+    			" -vn " <>   " -loglevel quiet" <> " -f "<> tpe <>" -",
+		mmaTpe],
+		sampleRate
+	]*)
+
+	(*Problems with getting stream to work... see second half of test notebook "Test_Import_Sound.nb"*)
+    (*Temporary solution uses *.wav recoding and standard Mathematica Import*)
+	tempWavFile=FileNameJoin[{$TemporaryDirectory, "tempFfmpegMathematicaInport.wav"}];
+	Run[ ffmpeg <> " -y -i " <>"\""<> path <>"\""<>
+    			" -vn " <>   " -loglevel quiet " <> tempWavFile];
+	Import[ tempWavFile ]
+];
+
+FFGetSampledSoundList::unkSampleFormat="Sample format `1` for audio is unknown, conducting streaming as u8.";
+
+
+(* ::Subsection::Closed:: *)
 (*FFprobe Function/Implementation*)
 
 
@@ -256,29 +275,54 @@ Switch[ $OperatingSystem,
   "Linux",   FFprobe @ "ffprobe"];
 
 
-FFProbe[file_String, streamCodec_String, targetVariable_String] := 
-		FFProbe[file, streamCodec, {targetVariable}][[1]];
+(*The following private variables will be used to buffer ffprobe outputs*)
+(*If a file with the same name, bytecount, and modification date is probed, the previous ffprobe result will be returned*)
+$PreviousFileName=Null;
+$PreviousFileByteCount=0;
+$PreviousFileDate=0;
+$PreviousLogString="";
 
 
-FFProbe[file_String, streamCodec_String, {targetVariables__String}] := 
+FFProbeLog[file_String]:=
 Module[ {tempFile, tempOutput},
-  tempFile = FileNameJoin[{$TemporaryDirectory,"tempffprobe.json"}];
-  Run[ffprobe <>
-		" -print_format json -show_format -show_streams \"" <> 
-	    file <> 
-		"\" > \"" <> 
-		tempFile <>
-		"\""
+  If[ FileNames[file]!={} && $PreviousFileName==file && $PreviousFileByteCount==FileByteCount[file] && $PreviousFileDate==FileDate[file],
+	$PreviousLogString,
+	
+	tempFile = FileNameJoin[{$TemporaryDirectory,"tempffprobe.json"}];
+	Run[ ffprobe <>
+		" -loglevel quiet -print_format json -show_format -show_streams " <>
+		"\"" <> file <> "\" > \"" <> tempFile <> "\""
 	];
-	tempOutput=Import[tempFile];
+	$PreviousLogString=Import[tempFile];
+	$PreviousFileName=file;
+	If[ FileNames[file]!={},
+		$PreviousFileDate=FileByteCount[file];
+		$PreviousFileDate=FileDate[file]
+	];
+	$PreviousLogString
+   ]
+];
+
+
+FFProbe[file_String, streamCodec_String, targetVariable_String, toExpression_:True] := 
+		FFProbe[file, streamCodec, {targetVariable}, toExpression][[1]];
+
+
+FFProbe[file_String, streamCodec_String, {targetVariables__String}, toExpression_:True] := 
+Module[ {tempOutput},
+    tempOutput=FFProbeLog[file];
 	tempOutput = Cases[("streams" /. tempOutput),{___, "codec_type"->streamCodec, ___}];
 	If[ Length[tempOutput] >= 1,
-		ToExpression[{targetVariables} /. tempOutput[[1]]],
+		If[toExpression,
+			ToExpression[{targetVariables} /. tempOutput[[1]]],
+			{targetVariables} /. tempOutput[[1]]
+		],
 		Message[FFGetFrameRate::noStream, streamCodec, file]; {}
 	]
 ];
 
 FFProbe::noStream = "Could not find `1` stream in file `2`.";
+
 
 FFGetFrameRate[file_String] := N @ FFProbe[file, "video", "r_frame_rate"];
 
@@ -286,7 +330,11 @@ FFGetDuration[file_String] := N @ FFProbe[file, "video", "duration"];
 
 FFGetImageSize[file_String] := FFProbe[file, "video", {"width","height"}];
 
+FFGetSampleRate[file_String] := FFProbe[file, "audio", "sample_rate"];
 
+FFGetChannels[file_String] := FFProbe[file, "audio", "channels"];
+
+FFGetSampleFormat[file_String] := FFProbe[file, "audio", "sample_fmt", False];
 
 
 (* ::Subsection:: *)
@@ -301,6 +349,11 @@ FFImport[path_String, elements_] := Switch[ elements,
   "FrameRate", FFGetFrameRate[path],
   "ImageSize", FFGetImageSize[path],
   "Duration", FFGetDuration[path],
+  "SampleRate", FFGetSampleRate[path],
+  "SampleFormat", FFGetSampleFormat[path],
+  "SampledSoundList", FFGetSampledSoundList[path],
+  "Sound", Sound[FFGetSampledSoundList[path]],
+  "Channels", FFGetChannels[path],
   _, Import[path, elements]
 ];
 
