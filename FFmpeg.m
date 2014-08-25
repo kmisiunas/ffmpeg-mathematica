@@ -238,6 +238,7 @@ FFGetSampledSoundList[path_String] := Module[{tempWavFile(*, tpe, mmaTpe, sample
 	(*Problems with getting stream to work... see second half of test notebook "Test_Import_Sound.nb"*)
     (*Temporary solution uses *.wav recoding and standard Mathematica Import*)
 	tempWavFile=FileNameJoin[{$TemporaryDirectory, "tempFfmpegMathematicaInport.wav"}];
+	
 	Run[ ffmpeg <> " -y -i " <>"\""<> path <>"\""<>
     			" -vn " <>   " -loglevel quiet " <> tempWavFile];
 	Import[ tempWavFile ]
