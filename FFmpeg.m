@@ -348,6 +348,7 @@ FFImport[path_String, elements_] := Switch[ elements,
   {"Frames", _List}, FFGetOneFrame[path, elements[[2]] ],
   {"Frames", _List, True}, FFGetOneFrameTest[path, elements[[2]] ], (*experimental*)
   "FrameRate", FFGetFrameRate[path],
+  "FrameCount", Ceiling[FFGetFrameRate[path]*FFGetDuration[path]],
   "ImageSize", FFGetImageSize[path],
   "Duration", FFGetDuration[path],
   "SampleRate", FFGetSampleRate[path],
