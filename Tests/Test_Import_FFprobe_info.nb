@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     25500,        640]
-NotebookOptionsPosition[     23203,        552]
-NotebookOutlinePosition[     23546,        567]
-CellTagsIndexPosition[     23503,        564]
+NotebookDataLength[     55219,       1418]
+NotebookOptionsPosition[     49395,       1208]
+NotebookOutlinePosition[     49738,       1223]
+CellTagsIndexPosition[     49695,       1220]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -22,6 +22,72 @@ Notebook[{
 Cell[CellGroupData[{
 Cell["FFMpeg ffprobe - related tests", "Title",
  CellChangeTimes->{{3.6176012593432617`*^9, 3.617601276687254*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"testWeb", "=", "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\""}],
+    ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"File", " ", "with", " ", "Mathematica"}], "-", 
+    RowBox[{"unsupported", " ", "codec"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "testFile", "=", 
+   "\"\<U:\\\\VSDdata\\\\project.SPP\\\\SPP.Coulb1\\\\SPP019\\\\2014-08-10 \
+19-03-50.633.wmv\>\""}], ";"}]}], "Input",
+ CellChangeTimes->{{3.617693986548318*^9, 3.6176940070344896`*^9}, {
+  3.6177060558166404`*^9, 3.6177060724255905`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["ffprobe (function path)", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.6176011256856174`*^9, 3.617601127236706*^9}, {3.617601339411842*^9, 
+  3.61760134305205*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["$OperatingSystem"], "Input"],
+
+Cell[BoxData["\<\"Windows\"\>"], "Output",
+ CellChangeTimes->{3.6176024207536907`*^9, 3.6176860486132936`*^9, 
+  3.617693977798817*^9, 3.618815436902182*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["FFmpeg`Private`ffprobe"], "Input",
+ CellChangeTimes->{{3.617462187419941*^9, 3.617462188838022*^9}, {
+  3.6176024012465754`*^9, 3.617602406283863*^9}}],
+
+Cell[BoxData["\<\"ffprobe.exe\"\>"], "Output",
+ CellChangeTimes->{
+  3.6174621893320503`*^9, {3.6176013443701253`*^9, 3.617601350462474*^9}, 
+   3.6176024082679768`*^9, 3.6176860491163225`*^9, 3.6176939783788505`*^9, 
+   3.618815437729229*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ToString", " ", "@", " ", 
+  RowBox[{"ReadLine", " ", "@", " ", 
+   RowBox[{"OpenRead", "[", 
+    RowBox[{
+     RowBox[{
+     "\"\<!\>\"", " ", "~~", " ", "\"\<ffprobe \>\"", "~~", " ", 
+      "\"\< -version\>\""}], ",", " ", 
+     RowBox[{"BinaryFormat", " ", "->", " ", "True"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6176944301496906`*^9, 3.6176944320007963`*^9}}],
+
+Cell[BoxData["\<\"ffprobe version N-57605-gf86387b\"\>"], "Output",
+ CellChangeTimes->{3.617694434638947*^9, 3.618815439778346*^9}]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -38,39 +104,42 @@ Cell[BoxData["\<\"C:\\\\Users\\\\Kenta\\\\AppData\\\\Local\\\\Temp\\\\\
 tempFFmpeg.json\"\>"], "Output",
  CellChangeTimes->{{3.617446995715025*^9, 3.617447018845348*^9}, {
    3.6174470497361145`*^9, 3.6174470822489743`*^9}, {3.6174616940937243`*^9, 
-   3.6174617062524195`*^9}, 3.6174622909828644`*^9}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["ffprobe (function path)", "Section",
- CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
-  3.6176011256856174`*^9, 3.617601127236706*^9}, {3.617601339411842*^9, 
-  3.61760134305205*^9}}],
-
-Cell[BoxData[
- RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData["$OperatingSystem"], "Input"],
-
-Cell[BoxData["\<\"Windows\"\>"], "Output",
- CellChangeTimes->{3.6176024207536907`*^9}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData["FFmpeg`Private`ffprobe"], "Input",
- CellChangeTimes->{{3.617462187419941*^9, 3.617462188838022*^9}, {
-  3.6176024012465754`*^9, 3.617602406283863*^9}}],
-
-Cell[BoxData["\<\"ffprobe.exe\"\>"], "Output",
- CellChangeTimes->{
-  3.6174621893320503`*^9, {3.6176013443701253`*^9, 3.617601350462474*^9}, 
-   3.6176024082679768`*^9}]
+   3.6174617062524195`*^9}, 3.6174622909828644`*^9, 3.6176946096989603`*^9, 
+   3.6188154398503504`*^9}]
 }, Open  ]]
 }, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["?Piping data from ffprobe directly?", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.6176011256856174`*^9, 3.617601127236706*^9}, {3.617705859436408*^9, 
+  3.617705867740883*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Piping", " ", "data", " ", "does", " ", "not", " ", "seem", " ", "to", 
+    " ", "work"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"ReadString", " ", "@", " ", 
+   RowBox[{"OpenRead", "[", 
+    RowBox[{
+     RowBox[{
+     "\"\<!\>\"", " ", "~~", " ", "\"\<ffprobe \>\"", "~~", " ", 
+      "\"\< -print_format json -show_format -show_streams -\>\""}], ",", " ", 
+     RowBox[{"BinaryFormat", " ", "->", " ", "True"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6176944301496906`*^9, 3.617694449703809*^9}, {
+   3.61769448137862*^9, 3.6176944823296747`*^9}, 3.6176945304414263`*^9, {
+   3.617705817705021*^9, 3.617705837754168*^9}}],
+
+Cell[BoxData["\<\"{\\r\\n\\r\\n}\\r\\n\"\>"], "Output",
+ CellChangeTimes->{3.6176944930202866`*^9, 3.6176945308724513`*^9, 
+  3.6177058077084494`*^9, 3.617705838519212*^9}]
+}, Open  ]]
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -78,83 +147,239 @@ Cell["\[OpenCurlyDoubleQuote]FrameRate\[CloseCurlyDoubleQuote]", "Section",
  CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
   3.6176011256856174`*^9, 3.617601127236706*^9}}],
 
-Cell[BoxData[
- RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input",
- CellChangeTimes->{{3.6176002355587053`*^9, 3.617600240445985*^9}}],
-
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"Import", "[", 
-  RowBox[{
-  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
-   "\"\<FrameRate\>\""}], "]"}]], "Input",
+  RowBox[{"testWeb", ",", " ", "\"\<FrameRate\>\""}], "]"}]], "Input",
  CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
-  3.61760113482414*^9, 3.6176011362632227`*^9}}],
+   3.61760113482414*^9, 3.6176011362632227`*^9}, 3.6176940178011055`*^9}],
 
 Cell[BoxData["10.`"], "Output",
  CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
-  3.617601101837253*^9, 3.6176011424545765`*^9}]
+  3.617601101837253*^9, 3.6176011424545765`*^9, 3.6176940246904993`*^9, 
+  3.6177060373765855`*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"FFImport", "[", 
-  RowBox[{
-  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
-   "\"\<FrameRate\>\""}], "]"}]], "Input",
+  RowBox[{"testWeb", ",", " ", "\"\<FrameRate\>\""}], "]"}]], "Input",
  CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
-   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9}],
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}}],
+
+Cell[BoxData["10.`"], "Output",
+ CellChangeTimes->{
+  3.6176011050024347`*^9, 3.6176011454907503`*^9, 3.617601220804058*^9, 
+   3.617694025480544*^9, 3.6176942051948233`*^9, 3.6176942415179014`*^9, 
+   3.617694307989703*^9, {3.6176949840273705`*^9, 3.6176949907457542`*^9}, {
+   3.6176950545294027`*^9, 3.617695077013689*^9}, 3.617695113544778*^9, 
+   3.617705896782544*^9, 3.617706040651773*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"{", "10", "}"}]], "Output",
- CellChangeTimes->{3.6176011050024347`*^9, 3.6176011454907503`*^9, 
-  3.617601220804058*^9}]
+ RowBox[{"Import", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<FrameRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.6177060455570536`*^9, 3.6177060460290804`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Import", "::", "format"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Cannot import data as \[NoBreak]\\!\\(\\\"FrameRate\\\"\\)\
+\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Import\\\", ButtonNote -> \
+\\\"Import::format\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6177060468461275`*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.6177060468461275`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<FrameRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, {3.617705902798888*^9, 
+   3.6177059063750925`*^9}}],
+
+Cell[BoxData["15.`"], "Output",
+ CellChangeTimes->{3.617705907217141*^9, 3.6177060497542934`*^9}]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[OpenCurlyDoubleQuote]FrameCount\[CloseCurlyDoubleQuote]", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.6176011256856174`*^9, 3.617601127236706*^9}, {3.618815432090907*^9, 
+  3.6188154328349495`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{"testWeb", ",", " ", "\"\<FrameCount\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.61760113482414*^9, 3.6176011362632227`*^9}, 3.6176940178011055`*^9, 
+   3.618815444163597*^9}],
+
+Cell[BoxData["89"], "Output",
+ CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
+  3.617601101837253*^9, 3.6176011424545765`*^9, 3.6176940246904993`*^9, 
+  3.6177060373765855`*^9, 3.618815453443128*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testWeb", ",", " ", "\"\<FrameCount\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, 3.6188154472117715`*^9}],
+
+Cell[BoxData["89"], "Output",
+ CellChangeTimes->{
+  3.6176011050024347`*^9, 3.6176011454907503`*^9, 3.617601220804058*^9, 
+   3.617694025480544*^9, 3.6176942051948233`*^9, 3.6176942415179014`*^9, 
+   3.617694307989703*^9, {3.6176949840273705`*^9, 3.6176949907457542`*^9}, {
+   3.6176950545294027`*^9, 3.617695077013689*^9}, 3.617695113544778*^9, 
+   3.617705896782544*^9, 3.617706040651773*^9, 3.6188154594994745`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<FrameCount\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.6177060455570536`*^9, 3.6177060460290804`*^9}, 
+   3.618815450354952*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Import", "::", "format"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Cannot import data as \
+\[NoBreak]\\!\\(\\\"FrameCount\\\"\\)\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Import\\\", ButtonNote -> \
+\\\"Import::format\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6177060468461275`*^9, 3.6188154604625297`*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.6177060468461275`*^9, 3.6188154604635296`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<FrameCount\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, {3.617705902798888*^9, 
+   3.6177059063750925`*^9}, 3.618815452987102*^9}],
+
+Cell[BoxData["45490"], "Output",
+ CellChangeTimes->{3.617705907217141*^9, 3.6177060497542934`*^9, 
+  3.618815460727545*^9}]
+}, Open  ]]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell["\[OpenCurlyDoubleQuote]ImageSize\[CloseCurlyDoubleQuote]", "Section",
  CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}}],
 
-Cell[BoxData[
- RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input",
- CellChangeTimes->{{3.6176002355587053`*^9, 3.617600240445985*^9}}],
-
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"Import", "[", 
-  RowBox[{
-  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
-   "\"\<ImageSize\>\""}], "]"}]], "Input",
- CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}}],
+  RowBox[{"testWeb", ",", " ", "\"\<ImageSize\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.61760113482414*^9, 3.6176011362632227`*^9}, 3.6176940178011055`*^9, 
+   3.6177060940228257`*^9}],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{"160", ",", "120"}], "}"}]], "Output",
  CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
-  3.617601101837253*^9}]
+  3.617601101837253*^9, 3.6176011424545765`*^9, 3.6176940246904993`*^9, 
+  3.6177060373765855`*^9, 3.617706105655491*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"FFImport", "[", 
-  RowBox[{
-  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
-   "\"\<ImageSize\>\""}], "]"}]], "Input",
+  RowBox[{"testWeb", ",", " ", "\"\<ImageSize\>\""}], "]"}]], "Input",
  CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
-  3.6176010966709576`*^9, 3.617601097911029*^9}}],
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, 3.6177060953098993`*^9}],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{"160", ",", "120"}], "}"}]], "Output",
- CellChangeTimes->{3.6176011050024347`*^9}]
+ CellChangeTimes->{
+  3.6176011050024347`*^9, 3.6176011454907503`*^9, 3.617601220804058*^9, 
+   3.617694025480544*^9, 3.6176942051948233`*^9, 3.6176942415179014`*^9, 
+   3.617694307989703*^9, {3.6176949840273705`*^9, 3.6176949907457542`*^9}, {
+   3.6176950545294027`*^9, 3.617695077013689*^9}, 3.617695113544778*^9, 
+   3.617705896782544*^9, 3.617706040651773*^9, 3.6177061093317013`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<ImageSize\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.6177060455570536`*^9, 3.6177060460290804`*^9}, 
+   3.617706096917991*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Import", "::", "format"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Cannot import data as \[NoBreak]\\!\\(\\\"ImageSize\\\"\\)\
+\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Import\\\", ButtonNote -> \
+\\\"Import::format\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6177060468461275`*^9, 3.617706109449708*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.6177060468461275`*^9, 3.617706109451708*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<ImageSize\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, {3.617705902798888*^9, 
+   3.6177059063750925`*^9}, 3.6177060983740745`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"800", ",", "448"}], "}"}]], "Output",
+ CellChangeTimes->{3.617705907217141*^9, 3.6177060497542934`*^9, 
+  3.617706109568715*^9}]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -162,6 +387,324 @@ Cell["\[OpenCurlyDoubleQuote]Duration\[CloseCurlyDoubleQuote]", "Section",
  CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
   3.617602435980562*^9, 3.6176024372676353`*^9}}],
 
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{"testWeb", ",", " ", "\"\<Duration\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.61760113482414*^9, 3.6176011362632227`*^9}, 3.6176940178011055`*^9, {
+   3.6177060940228257`*^9, 3.6177061215423994`*^9}}],
+
+Cell[BoxData["8.9`"], "Output",
+ CellChangeTimes->{
+  3.6176002151835394`*^9, 3.6176010226187224`*^9, 3.617601101837253*^9, 
+   3.6176011424545765`*^9, 3.6176940246904993`*^9, 3.6177060373765855`*^9, {
+   3.617706105655491*^9, 3.617706133907107*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testWeb", ",", " ", "\"\<Duration\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, {3.6177060953098993`*^9, 
+   3.6177061229654813`*^9}}],
+
+Cell[BoxData["8.9`"], "Output",
+ CellChangeTimes->{
+  3.6176011050024347`*^9, 3.6176011454907503`*^9, 3.617601220804058*^9, 
+   3.617694025480544*^9, 3.6176942051948233`*^9, 3.6176942415179014`*^9, 
+   3.617694307989703*^9, {3.6176949840273705`*^9, 3.6176949907457542`*^9}, {
+   3.6176950545294027`*^9, 3.617695077013689*^9}, 3.617695113544778*^9, 
+   3.617705896782544*^9, 3.617706040651773*^9, {3.6177061093317013`*^9, 
+   3.6177061369412804`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<Duration\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.6177060455570536`*^9, 3.6177060460290804`*^9}, {
+  3.617706096917991*^9, 3.617706124029542*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Import", "::", "format"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Cannot import data as \[NoBreak]\\!\\(\\\"Duration\\\"\\)\
+\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Import\\\", ButtonNote -> \
+\\\"Import::format\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.6177060468461275`*^9, {3.617706109449708*^9, 3.6177061370622873`*^9}}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{
+  3.6177060468461275`*^9, {3.617706109451708*^9, 3.6177061370642877`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<Duration\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, {3.617705902798888*^9, 
+   3.6177059063750925`*^9}, {3.6177060983740745`*^9, 3.617706126707695*^9}}],
+
+Cell[BoxData["3032.614`"], "Output",
+ CellChangeTimes->{
+  3.617705907217141*^9, 3.6177060497542934`*^9, {3.617706109568715*^9, 
+   3.6177061371862946`*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[OpenCurlyDoubleQuote]SampleRate\[CloseCurlyDoubleQuote]", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.617602435980562*^9, 3.6176024372676353`*^9}, {3.617686103080409*^9, 
+  3.6176861047595053`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{"testWeb", ",", " ", "\"\<SampleRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.61760113482414*^9, 3.6176011362632227`*^9}, 3.6176940178011055`*^9, {
+   3.6177060940228257`*^9, 3.6177061215423994`*^9}, 3.617706158492513*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Import", "::", "noelem"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The Import element \
+\\\"\[NoBreak]\\!\\(\\\"SampleRate\\\"\\)\[NoBreak]\\\" is not present when \
+importing as \[NoBreak]\\!\\(\\\"AVI\\\"\\)\[NoBreak]. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/Import\\\", ButtonNote -> \
+\\\"Import::noelem\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6177061643678493`*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{
+  3.6176002151835394`*^9, 3.6176010226187224`*^9, 3.617601101837253*^9, 
+   3.6176011424545765`*^9, 3.6176940246904993`*^9, 3.6177060373765855`*^9, {
+   3.617706105655491*^9, 3.617706133907107*^9}, 3.6177061643678493`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testWeb", ",", " ", "\"\<SampleRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, {3.6177060953098993`*^9, 
+   3.6177061229654813`*^9}, 3.6177061624207377`*^9}],
+
+Cell[BoxData["22050"], "Output",
+ CellChangeTimes->{
+  3.6176011050024347`*^9, 3.6176011454907503`*^9, 3.617601220804058*^9, 
+   3.617694025480544*^9, 3.6176942051948233`*^9, 3.6176942415179014`*^9, 
+   3.617694307989703*^9, {3.6176949840273705`*^9, 3.6176949907457542`*^9}, {
+   3.6176950545294027`*^9, 3.617695077013689*^9}, 3.617695113544778*^9, 
+   3.617705896782544*^9, 3.617706040651773*^9, {3.6177061093317013`*^9, 
+   3.6177061369412804`*^9}, 3.6177061672390137`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<SampleRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.6177060455570536`*^9, 3.6177060460290804`*^9}, {
+   3.617706096917991*^9, 3.617706124029542*^9}, 3.617706165533916*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Import", "::", "format"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Cannot import data as \
+\[NoBreak]\\!\\(\\\"SampleRate\\\"\\)\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Import\\\", ButtonNote -> \
+\\\"Import::format\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.6177060468461275`*^9, {3.617706109449708*^9, 3.6177061370622873`*^9}, 
+   3.6177061673650208`*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{
+  3.6177060468461275`*^9, {3.617706109451708*^9, 3.6177061370642877`*^9}, 
+   3.6177061673670206`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FFImport", "[", 
+  RowBox[{"testFile", ",", " ", "\"\<SampleRate\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+   3.6176010966709576`*^9, 3.617601097911029*^9}, 3.6176011396564164`*^9, {
+   3.6176940226993856`*^9, 3.6176940243924828`*^9}, {3.617705902798888*^9, 
+   3.6177059063750925`*^9}, {3.6177060983740745`*^9, 3.617706126707695*^9}, 
+   3.617706168997114*^9}],
+
+Cell[BoxData["44100"], "Output",
+ CellChangeTimes->{
+  3.617705907217141*^9, 3.6177060497542934`*^9, {3.617706109568715*^9, 
+   3.6177061371862946`*^9}, 3.617706169610149*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Backup (ffprobe log)", "Subsection",
+ CellChangeTimes->{{3.6177061924754567`*^9, 3.6177061996318665`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"FFProbeLog", "[", "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6176871306451826`*^9, 3.6176871442669616`*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6176877647714524`*^9, 3.6176877659575205`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\"\<streams\>\"", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\"\<codec_time_base\>\"", "\[Rule]", "\"\<1/10\>\""}], ",", 
+        RowBox[{
+        "\"\<codec_long_name\>\"", "\[Rule]", "\"\<Microsoft Video 1\>\""}], 
+        ",", 
+        RowBox[{"\"\<codec_type\>\"", "\[Rule]", "\"\<video\>\""}], ",", 
+        RowBox[{"\"\<display_aspect_ratio\>\"", "\[Rule]", "\"\<0:1\>\""}], 
+        ",", 
+        RowBox[{"\"\<r_frame_rate\>\"", "\[Rule]", "\"\<10/1\>\""}], ",", 
+        RowBox[{"\"\<codec_tag_string\>\"", "\[Rule]", "\"\<CRAM\>\""}], ",", 
+        RowBox[{"\"\<codec_tag\>\"", "\[Rule]", "\"\<0x4d415243\>\""}], ",", 
+        RowBox[{"\"\<index\>\"", "\[Rule]", "0"}], ",", 
+        RowBox[{"\"\<has_b_frames\>\"", "\[Rule]", "0"}], ",", 
+        RowBox[{"\"\<height\>\"", "\[Rule]", "120"}], ",", 
+        RowBox[{"\"\<codec_name\>\"", "\[Rule]", "\"\<msvideo1\>\""}], ",", 
+        RowBox[{"\"\<disposition\>\"", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<lyrics\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<forced\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<default\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<original\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<clean_effects\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<comment\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<dub\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<attached_pic\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<karaoke\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<visual_impaired\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<hearing_impaired\>\"", "\[Rule]", "0"}]}], "}"}]}], 
+        ",", 
+        RowBox[{"\"\<duration_ts\>\"", "\[Rule]", "89"}], ",", 
+        RowBox[{"\"\<pix_fmt\>\"", "\[Rule]", "\"\<rgb555le\>\""}], ",", 
+        RowBox[{"\"\<width\>\"", "\[Rule]", "160"}], ",", 
+        RowBox[{"\"\<sample_aspect_ratio\>\"", "\[Rule]", "\"\<0:1\>\""}], 
+        ",", 
+        RowBox[{"\"\<level\>\"", "\[Rule]", 
+         RowBox[{"-", "99"}]}], ",", 
+        RowBox[{"\"\<avg_frame_rate\>\"", "\[Rule]", "\"\<0/0\>\""}], ",", 
+        RowBox[{"\"\<time_base\>\"", "\[Rule]", "\"\<1/10\>\""}], ",", 
+        RowBox[{"\"\<nb_frames\>\"", "\[Rule]", "\"\<89\>\""}], ",", 
+        RowBox[{"\"\<start_pts\>\"", "\[Rule]", "0"}], ",", 
+        RowBox[{"\"\<start_time\>\"", "\[Rule]", "\"\<0.000000\>\""}], ",", 
+        RowBox[{"\"\<duration\>\"", "\[Rule]", "\"\<8.900000\>\""}]}], "}"}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+        "\"\<codec_tag_string\>\"", "\[Rule]", "\"\<[1][0][0][0]\>\""}], ",", 
+        RowBox[{"\"\<codec_tag\>\"", "\[Rule]", "\"\<0x0001\>\""}], ",", 
+        RowBox[{"\"\<r_frame_rate\>\"", "\[Rule]", "\"\<0/0\>\""}], ",", 
+        RowBox[{"\"\<codec_time_base\>\"", "\[Rule]", "\"\<1/22050\>\""}], 
+        ",", 
+        RowBox[{
+        "\"\<codec_long_name\>\"", "\[Rule]", "\"\<PCM unsigned 8-bit\>\""}], 
+        ",", 
+        RowBox[{"\"\<bits_per_sample\>\"", "\[Rule]", "8"}], ",", 
+        RowBox[{"\"\<codec_type\>\"", "\[Rule]", "\"\<audio\>\""}], ",", 
+        RowBox[{"\"\<bit_rate\>\"", "\[Rule]", "\"\<176400\>\""}], ",", 
+        RowBox[{"\"\<channels\>\"", "\[Rule]", "1"}], ",", 
+        RowBox[{"\"\<index\>\"", "\[Rule]", "1"}], ",", 
+        RowBox[{"\"\<codec_name\>\"", "\[Rule]", "\"\<pcm_u8\>\""}], ",", 
+        RowBox[{"\"\<sample_fmt\>\"", "\[Rule]", "\"\<u8\>\""}], ",", 
+        StyleBox[
+         RowBox[{"\"\<sample_rate\>\"", "\[Rule]", "\"\<22050\>\""}],
+         FontColor->GrayLevel[0],
+         Background->RGBColor[1, 1, 0]], 
+        StyleBox[",",
+         FontColor->GrayLevel[0]], 
+        RowBox[{"\"\<avg_frame_rate\>\"", "\[Rule]", "\"\<0/0\>\""}], ",", 
+        RowBox[{"\"\<time_base\>\"", "\[Rule]", "\"\<1/22050\>\""}], ",", 
+        RowBox[{"\"\<nb_frames\>\"", "\[Rule]", "\"\<196245\>\""}], ",", 
+        RowBox[{"\"\<start_pts\>\"", "\[Rule]", "0"}], ",", 
+        RowBox[{"\"\<start_time\>\"", "\[Rule]", "\"\<0.000000\>\""}], ",", 
+        RowBox[{"\"\<disposition\>\"", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<lyrics\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<forced\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<default\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<original\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<clean_effects\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<comment\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<dub\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<attached_pic\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<karaoke\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<visual_impaired\>\"", "\[Rule]", "0"}], ",", 
+           RowBox[{"\"\<hearing_impaired\>\"", "\[Rule]", "0"}]}], "}"}]}]}], 
+       "}"}]}], "}"}]}], ",", 
+   RowBox[{"\"\<format\>\"", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<nb_programs\>\"", "\[Rule]", "0"}], ",", 
+      RowBox[{"\"\<nb_streams\>\"", "\[Rule]", "2"}], ",", 
+      RowBox[{
+      "\"\<filename\>\"", "\[Rule]", 
+       "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\""}], ",", 
+      RowBox[{"\"\<size\>\"", "\[Rule]", "\"\<1207538\>\""}], ",", 
+      RowBox[{"\"\<format_name\>\"", "\[Rule]", "\"\<avi\>\""}], ",", 
+      RowBox[{"\"\<bit_rate\>\"", "\[Rule]", "\"\<1085427\>\""}], ",", 
+      RowBox[{
+      "\"\<format_long_name\>\"", "\[Rule]", 
+       "\"\<AVI (Audio Video Interleaved)\>\""}], ",", 
+      RowBox[{"\"\<start_time\>\"", "\[Rule]", "\"\<0.000000\>\""}], ",", 
+      RowBox[{"\"\<duration\>\"", "\[Rule]", "\"\<8.900000\>\""}], ",", 
+      RowBox[{"\"\<probe_score\>\"", "\[Rule]", "100"}]}], "}"}]}]}], 
+  "}"}]], "Input",
+ CellChangeTimes->{3.617687388260917*^9}]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["tests for buffering ffprobe output to prevent multiple calls", "Section",
+ CellChangeTimes->{{3.617600159718367*^9, 3.6176001685878744`*^9}, {
+  3.6176011256856174`*^9, 3.617601127236706*^9}, {3.617601339411842*^9, 
+  3.61760134305205*^9}, {3.617693471067834*^9, 3.6176934829955163`*^9}, {
+  3.617706223162212*^9, 3.6177062340808363`*^9}}],
+
 Cell[BoxData[
  RowBox[{"Needs", "[", "\"\<FFmpeg`\>\"", "]"}]], "Input",
  CellChangeTimes->{{3.6176002355587053`*^9, 3.617600240445985*^9}}],
@@ -169,32 +712,145 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"Import", "[", 
-  RowBox[{
-  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
-   "\"\<Duration\>\""}], "]"}]], "Input",
- CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
-  3.617602442733948*^9, 3.6176024441170273`*^9}}],
+ RowBox[{"FileNames", "[", "testWeb", "]"}]], "Input",
+ CellChangeTimes->{{3.6176940851139555`*^9, 3.6176940988247395`*^9}}],
 
-Cell[BoxData["8.9`"], "Output",
- CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
-  3.617601101837253*^9, 3.6176024503573847`*^9}]
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",
+ CellChangeTimes->{3.6176941025079503`*^9, 3.6176941957572837`*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"FFImport", "[", 
-  RowBox[{
-  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", ",", " ", 
-   "\"\<Duration\>\""}], "]"}]], "Input",
- CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
-  3.6176010966709576`*^9, 3.617601097911029*^9}, {3.617602545205809*^9, 
-  3.617602546211867*^9}}],
+ RowBox[{"FileNames", "[", "testWeb", "]"}]], "Input",
+ CellChangeTimes->{{3.617694268488444*^9, 3.6176942842033424`*^9}}],
 
-Cell[BoxData["8.9`"], "Output",
- CellChangeTimes->{3.6176011050024347`*^9, 3.6176025529172506`*^9, 
-  3.617602584587062*^9}]
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",
+ CellChangeTimes->{{3.617694271552619*^9, 3.6176942846683693`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileHash", "[", "testWeb", "]"}]], "Input",
+ CellChangeTimes->{{3.617693654891348*^9, 3.6176936592205954`*^9}, {
+  3.6176941045620675`*^9, 3.6176941055701256`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"FileHash", "::", "noopen"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Cannot open \
+\[NoBreak]\\!\\(\\\"http://er.jsc.nasa.gov/seh/jfkrice.avi\\\"\\)\[NoBreak]. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/noopen\\\", \
+ButtonNote -> \\\"FileHash::noopen\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6176941064801774`*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.617693667268056*^9, 3.6176941064811773`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileHash", "[", "testFile", "]"}]], "Input",
+ CellChangeTimes->{{3.617693654891348*^9, 3.6176936592205954`*^9}, {
+  3.6176941045620675`*^9, 3.617694114281624*^9}}],
+
+Cell[BoxData["172183326622596802822021040680724024140"], "Output",
+ CellChangeTimes->{3.617694118030838*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileDate", "[", 
+  RowBox[{"testFile", ",", "\"\<Modification\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.617693654891348*^9, 3.617693691236427*^9}, 
+   3.617694119794939*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  RowBox[{"\"Sun 10 Aug 2014 19:54:24\""}],RowBox[{"DateObject", "[", 
+     RowBox[{
+       RowBox[{"{", 
+         RowBox[{"2014", ",", "8", ",", "10"}], "}"}], ",", 
+       RowBox[{"TimeObject", "[", 
+         RowBox[{"{", 
+           RowBox[{"19", ",", "54", ",", "24.`"}], "}"}], "]"}]}], "]"}]},
+  "DateObject",
+  Editable->False]], "Output",
+ CellChangeTimes->{{3.61769368044681*^9, 3.6176936914394383`*^9}, 
+   3.617694120418975*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileByteCount", "[", "testFile", "]"}]], "Input",
+ CellChangeTimes->{{3.617693654891348*^9, 3.6176937297806315`*^9}, 
+   3.617694122029067*^9}],
+
+Cell[BoxData["613855655"], "Output",
+ CellChangeTimes->{{3.6176937254323826`*^9, 3.61769373010065*^9}, 
+   3.6176941225000935`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileHash", "[", "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.61760019753353*^9, 3.617600207062075*^9}, {
+  3.617602442733948*^9, 3.6176024441170273`*^9}, {3.61768611569013*^9, 
+  3.6176861171862164`*^9}, {3.617693501262561*^9, 3.617693537101611*^9}, {
+  3.6176935715515814`*^9, 3.6176935749257746`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"FileHash", "::", "noopen"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Cannot open \
+\[NoBreak]\\!\\(\\\"http://er.jsc.nasa.gov/seh/jfkrice.avi\\\"\\)\[NoBreak]. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/noopen\\\", \
+ButtonNote -> \\\"FileHash::noopen\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6176861240166063`*^9, 3.6176935080539494`*^9, 
+  3.61769353831168*^9, 3.6176935754718056`*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.6176002151835394`*^9, 3.6176010226187224`*^9, 
+  3.617601101837253*^9, 3.6176024503573847`*^9, 3.6176861240176067`*^9, 
+  3.6176935080549498`*^9, 3.61769353831368*^9, 3.6176935754738054`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FileByteCount", "[", 
+  "\"\<http://er.jsc.nasa.gov/seh/jfkrice.avi\>\"", "]"}]], "Input",
+ CellChangeTimes->{3.6176937463175774`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"FileByteCount", "::", "nffil"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"File not found during \
+\[NoBreak]\\!\\(FileByteCount[\\\"http://er.jsc.nasa.gov/seh/jfkrice.avi\\\"]\
+\\)\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/nffil\\\", ButtonNote -> \
+\\\"FileByteCount::nffil\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.617693747021618*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.6176937470226173`*^9}]
 }, Open  ]]
 }, Open  ]],
 
@@ -547,7 +1203,7 @@ Cell[BoxData[
 Cell[BoxData["15"], "Output",
  CellChangeTimes->{3.6174626664083376`*^9}]
 }, Open  ]]
-}, Open  ]]
+}, Closed]]
 }, Open  ]]
 },
 WindowSize->{952, 1154},
@@ -568,79 +1224,201 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[580, 22, 115, 1, 90, "Title"],
+Cell[698, 25, 72, 1, 31, "Input"],
+Cell[773, 28, 600, 15, 72, "Input"],
 Cell[CellGroupData[{
-Cell[720, 27, 322, 7, 31, "Input"],
-Cell[1045, 36, 302, 4, 31, "Output"]
+Cell[1398, 47, 209, 3, 63, "Section"],
+Cell[CellGroupData[{
+Cell[1632, 54, 42, 0, 31, "Input"],
+Cell[1677, 56, 157, 2, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1384, 45, 209, 3, 63, "Section"],
-Cell[1596, 50, 72, 1, 31, "Input"],
-Cell[CellGroupData[{
-Cell[1693, 55, 42, 0, 31, "Input"],
-Cell[1738, 57, 86, 1, 31, "Output"]
+Cell[1871, 63, 165, 2, 31, "Input"],
+Cell[2039, 67, 243, 4, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1861, 63, 165, 2, 31, "Input"],
-Cell[2029, 67, 169, 3, 31, "Output"]
+Cell[2319, 76, 398, 9, 31, "Input"],
+Cell[2720, 87, 131, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2888, 93, 322, 7, 31, "Input"],
+Cell[3213, 102, 354, 5, 31, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2247, 76, 194, 2, 63, "Section"],
-Cell[2444, 80, 140, 2, 31, "Input"],
+Cell[3616, 113, 222, 3, 63, "Section"],
 Cell[CellGroupData[{
-Cell[2609, 86, 270, 6, 31, "Input"],
-Cell[2882, 94, 148, 2, 31, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[3067, 101, 298, 6, 31, "Input"],
-Cell[3368, 109, 144, 3, 31, "Output"]
-}, Open  ]]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[3561, 118, 143, 1, 49, "Section"],
-Cell[3707, 121, 140, 2, 31, "Input"],
-Cell[CellGroupData[{
-Cell[3872, 127, 220, 5, 31, "Input"],
-Cell[4095, 134, 170, 4, 31, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[4302, 143, 273, 6, 31, "Input"],
-Cell[4578, 151, 121, 3, 31, "Output"]
+Cell[3863, 120, 691, 15, 72, "Input"],
+Cell[4557, 137, 172, 2, 152, "Output"]
 }, Open  ]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[4748, 160, 193, 2, 49, "Section"],
-Cell[4944, 164, 140, 2, 31, "Input"],
+Cell[4778, 145, 194, 2, 49, "Section"],
 Cell[CellGroupData[{
-Cell[5109, 170, 270, 6, 31, "Input"],
-Cell[5382, 178, 148, 2, 31, "Output"]
+Cell[4997, 151, 249, 4, 31, "Input"],
+Cell[5249, 157, 199, 3, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[5567, 185, 321, 7, 31, "Input"],
-Cell[5891, 194, 124, 2, 64, "Output"]
+Cell[5485, 165, 306, 5, 31, "Input"],
+Cell[5794, 172, 396, 6, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6227, 183, 180, 3, 31, "Input"],
+Cell[6410, 188, 441, 10, 21, "Message"],
+Cell[6854, 200, 78, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6969, 206, 359, 6, 31, "Input"],
+Cell[7331, 214, 97, 1, 31, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6064, 202, 166, 2, 63, "Section"],
-Cell[6233, 206, 7243, 136, 552, "Input"],
-Cell[13479, 344, 94, 1, 31, "Input"],
+Cell[7477, 221, 246, 3, 63, "Section"],
 Cell[CellGroupData[{
-Cell[13598, 349, 149, 2, 31, "Input"],
-Cell[13750, 353, 5006, 89, 272, "Output"]
+Cell[7748, 228, 276, 5, 31, "Input"],
+Cell[8027, 235, 219, 3, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[18793, 447, 463, 11, 31, "Input"],
-Cell[19259, 460, 2579, 46, 152, "Output"]
+Cell[8283, 243, 331, 5, 31, "Input"],
+Cell[8617, 250, 418, 6, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[21875, 511, 522, 12, 31, "Input"],
-Cell[22400, 525, 81, 1, 31, "Output"]
+Cell[9072, 261, 207, 4, 31, "Input"],
+Cell[9282, 267, 466, 10, 21, "Message"],
+Cell[9751, 279, 102, 1, 31, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[22518, 531, 569, 13, 52, "Input"],
-Cell[23090, 546, 73, 1, 31, "Output"]
+Cell[9890, 285, 382, 6, 31, "Input"],
+Cell[10275, 293, 123, 2, 31, "Output"]
 }, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10447, 301, 143, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[10615, 306, 277, 5, 31, "Input"],
+Cell[10895, 313, 267, 5, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11199, 323, 330, 5, 31, "Input"],
+Cell[11532, 330, 466, 8, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12035, 343, 206, 4, 31, "Input"],
+Cell[12244, 349, 463, 10, 21, "Message"],
+Cell[12710, 361, 100, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12847, 367, 383, 6, 31, "Input"],
+Cell[13233, 375, 168, 4, 31, "Output"]
 }, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13450, 385, 193, 2, 63, "Section"],
+Cell[CellGroupData[{
+Cell[13668, 391, 302, 5, 31, "Input"],
+Cell[13973, 398, 250, 4, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14260, 407, 359, 6, 31, "Input"],
+Cell[14622, 415, 450, 7, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15109, 427, 228, 4, 31, "Input"],
+Cell[15340, 433, 491, 11, 21, "Message"],
+Cell[15834, 446, 129, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16000, 453, 406, 6, 31, "Input"],
+Cell[16409, 461, 157, 3, 31, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16615, 470, 246, 3, 63, "Section"],
+Cell[CellGroupData[{
+Cell[16886, 477, 326, 5, 31, "Input"],
+Cell[17215, 484, 523, 11, 21, "Message"],
+Cell[17741, 497, 277, 4, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18055, 506, 385, 6, 31, "Input"],
+Cell[18443, 514, 475, 7, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18955, 526, 253, 4, 31, "Input"],
+Cell[19211, 532, 521, 12, 21, "Message"],
+Cell[19735, 546, 157, 3, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19929, 554, 434, 7, 31, "Input"],
+Cell[20366, 563, 175, 3, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20578, 571, 112, 1, 43, "Subsection"],
+Cell[20693, 574, 181, 3, 31, "Input"],
+Cell[20877, 579, 96, 1, 31, "Input"],
+Cell[20976, 582, 5925, 113, 432, "Input"]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26950, 701, 345, 4, 63, "Section"],
+Cell[27298, 707, 140, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[27463, 713, 138, 2, 31, "Input"],
+Cell[27604, 717, 113, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27754, 724, 136, 2, 31, "Input"],
+Cell[27893, 728, 113, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28043, 735, 188, 3, 31, "Input"],
+Cell[28234, 740, 480, 10, 21, "Message"],
+Cell[28717, 752, 100, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28854, 758, 187, 3, 31, "Input"],
+Cell[29044, 763, 108, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29189, 769, 202, 4, 31, "Input"],
+Cell[29394, 775, 468, 12, 41, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29899, 792, 167, 3, 31, "Input"],
+Cell[30069, 797, 131, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30237, 804, 374, 6, 31, "Input"],
+Cell[30614, 812, 552, 11, 21, "Message"],
+Cell[31169, 825, 247, 3, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31453, 833, 158, 3, 31, "Input"],
+Cell[31614, 838, 512, 11, 21, "Message"],
+Cell[32129, 851, 78, 1, 31, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32256, 858, 166, 2, 63, "Section"],
+Cell[32425, 862, 7243, 136, 552, "Input"],
+Cell[39671, 1000, 94, 1, 31, "Input"],
+Cell[CellGroupData[{
+Cell[39790, 1005, 149, 2, 31, "Input"],
+Cell[39942, 1009, 5006, 89, 272, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[44985, 1103, 463, 11, 31, "Input"],
+Cell[45451, 1116, 2579, 46, 152, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[48067, 1167, 522, 12, 31, "Input"],
+Cell[48592, 1181, 81, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[48710, 1187, 569, 13, 52, "Input"],
+Cell[49282, 1202, 73, 1, 31, "Output"]
+}, Open  ]]
+}, Closed]]
 }, Open  ]]
 }
 ]
