@@ -18,7 +18,8 @@
   Designed for B&W videos.
   *)
 (*Version 1 (2014-05-07) - initial release. *)
-(*Version 1 (2014-08-21) - ffprobe and performace mode *)
+(*Version 2 (2014-08-21) - ffprobe and performace mode *)
+(*Version 3 (2015-03-09) - ffprobe no longer requires temporary files *)
 
 
 (* ::Section:: *)
@@ -135,7 +136,7 @@ FFInputStreamAt[file_String, at_Integer, All] :=
   dim = FFImport[file, "ImageSize"];
   startAtSec = (at-1) / fps;
   st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ formatedFile ~~ 
-    " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
+    " -ss " ~~ ToString@startAtSec ~~ (*  method too slow! *)
     (*" -frames:v " ~~ ToString@noOfFrames ~~ *)
     " -loglevel quiet" ~~ 
     " -f image2pipe " ~~ 
@@ -240,15 +241,9 @@ FFProbe[file_String, streamCodec_String, targetVariable_String] :=
 
 FFProbe[file_String, streamCodec_String, {targetVariables__String}] := 
 Module[ {tempFile, tempOutput},
-  tempFile = FileNameJoin[{$TemporaryDirectory,"tempffprobe.json"}];
-  Run[ffprobe <>
-		" -print_format json -show_format -show_streams \"" <> 
-	    file <> 
-		"\" > \"" <> 
-		tempFile <>
-		"\""
-	];
-	tempOutput=Import[tempFile];
+  tempOutput = Import["!" <> ffprobe <>
+    " -loglevel panic -print_format json -show_format -show_streams \"" <> 
+      file <> "\"", "JSON"];
 	tempOutput = Cases[("streams" /. tempOutput),{___, "codec_type"->streamCodec, ___}];
 	If[ Length[tempOutput] >= 1,
 		ToExpression[{targetVariables} /. tempOutput[[1]]],
