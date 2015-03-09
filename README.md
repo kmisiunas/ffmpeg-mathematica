@@ -11,7 +11,7 @@ Mimicking Mathematica's Import function:
 
 Also supports some property look-up functions using ffprobe:  
 `FFImport[ "file.avi", "FrameRate"]` - returns the frame rate of the video  
-`FFImport[ "file.avi", "Duration"]` - returns the duration of the video in sec  
+`FFImport[ "file.avi", "Duration"]` - returns the duration of the video in sec
 `FFImport[ "file.avi", "ImageSize"]` - frame size in pixels  
 
 
@@ -52,9 +52,12 @@ Color mode can be changed via settings. Default one is "rgb24". If grey-scale is
 
 ## ToDo List and known bugs
 
- - There is sometimes an error loading the video - where the ffmpeg reports end of stream before entire video was loaded. On the internet there seems to be a suggestion that stream is not closed properly in Mathematica. Be careful! In my experience it is a problem with external USB hard-drives. Copy it to permanent had drive fist.
+ - There is sometimes an error loading the video - where the ffmpeg reports end of stream before entire video was loaded. On the internet there seems to be a suggestion that stream is not closed properly in Mathematica. Be careful! In my experience it is a problem with external USB hard-drives with MAC OS X.
  - the fast lookup is not implemented. It is slow to go though large videos to the right frame. Load video in big lumps to avoid this penalty. 
- - There is no fast method for looking up frame number yet. Mathematica will report an estimate on this number but it might be inaccurate (typically difference is within few frames).
+
+## ToDo
+
+ - Restructure to work with built in Import[] function.
 
 ## Contributors
 
