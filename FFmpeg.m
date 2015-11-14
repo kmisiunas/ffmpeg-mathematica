@@ -96,61 +96,6 @@ Switch[ $OperatingSystem,
 (* ::Subsection::Closed:: *)
 (*FFmpeg Implementation*)
 
-(*store many more solutions if there any*)
-overflowReadAsString = {};
-overflowReadAsStringStream = None;
-
-FFReadAsString[stream_, n_] := Module[ {answer},
-  If[stream != overflowReadAsStringStream, (*clear*) overflowReadAsString = {} ];
-  While[ 
-    (* not the same stream OR not enough elements *)
-    Length[ overflowReadAsString ] < n,
-    (* add more elements from the stream *)
-    overflowReadAsString = overflowReadAsString ~ Join ~ ToCharacterCode@ReadString[stream, EndOfBuffer] ;
-    (* Print@Length@overflowReadAsString; *)
-  ];
-  overflowReadAsStringStream = stream;
-  (*have enough in memory now *)
-  answer = Take[ overflowReadAsString, n ];
-  overflowReadAsString = Drop[ overflowReadAsString, n ];
-  Return[answer]
-]
-
-FFGetNextFrameMAC[stream_, dim_] := 
-  Image[
-    Partition[ 
-      Partition[ 
-        FFReadAsString[stream,  OptionValue[FFmpeg, "Colors"]*dim[[1]]*dim[[2]] ]
-        , OptionValue[FFmpeg, "Colors"] ]
-      , dim[[1]] ]
-  , "Byte"]
-
-
-
-
-FFReadAsString2[stream_, n_] := Module[ {first, bufferSize, all},
-  If[stream != overflowReadAsStringStream, 
-    (*clear*) overflowReadAsString = {}; overflowReadAsStringStream = stream; ];
-  first = ToCharacterCode@ReadString[stream, EndOfBuffer];
-  bufferSize = Length[first];
-  all = Join[ overflowReadAsString , first , Flatten[
-    Reap[ Do[ 
-      Sow @ ToCharacterCode@ReadString[stream, EndOfBuffer] ,
-      (*times*) Ceiling[ (n - Length[overflowReadAsString]) / (bufferSize) ] - 1
-    ] ][[2]]
-  ] ];
-  overflowReadAsString = Drop[ all, n ];
-  Return[Take[ all, n ]]
-]
-
-FFGetNextFrameMAC2[stream_, dim_] := 
-  Image[
-    Partition[ 
-      Partition[ 
-        FFReadAsString2[stream,  OptionValue[FFmpeg, "Colors"]*dim[[1]]*dim[[2]] ]
-        , OptionValue[FFmpeg, "Colors"] ]
-      , dim[[1]] ]
-  , "Byte"]
 
 (*reads stream for next frame*)
 FFGetNextFrame[stream_, dim_] := 
@@ -167,6 +112,39 @@ FFSkipFrame[stream_, dim_, n_Integer:1] :=
   Skip[ stream, Byte, OptionValue[FFmpeg, "Colors"]*n*dim[[1]]*dim[[2]] ]
 
 (*makes a stream*)
+(* special handler for MAC because there is an error for M9+ with pipes*)
+If[ $OperatingSystem == "MacOSX",
+
+(*MAC OS X version*)
+(*most likely does not handle multiple files at the same time!!*)
+(*leaves pipe in /tmp/ folder *)
+FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
+  Module[{fps, startAtSec, st, dim, formatedFile, cmd},
+  macPipeAddress =  "/tmp/pipeFFmpegToMathematica";
+  Run["rm " ~~ macPipeAddress];
+  Run["mkfifo " ~~ macPipeAddress]; (*make pipe*)
+  formatedFile =  "\"" ~~ file ~~ "\""; 
+  fps = FFImport[file, "FrameRate"];
+  dim = FFImport[file, "ImageSize"];
+  startAtSec = (at-1) / fps;
+  cmd = ffmpeg ~~ 
+    " -i " ~~ formatedFile ~~ 
+    " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
+    " -frames:v " ~~ ToString@noOfFrames ~~ 
+    " -loglevel quiet" ~~ 
+    " -f image2pipe " ~~  
+    " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~ 
+    " -vcodec rawvideo" ~~
+    " -y " ~~ (* overwrite file if there is a pipe already*)
+    macPipeAddress ; (*pipe the ffmpeg into new pipe/file*)
+  KillProcess[process]; (*clean up last mess*)
+  process = StartProcess[$SystemShell];
+  WriteLine[process, cmd]; (*do not freeze the notebook*)
+  st = OpenRead[ "!cat " ~~ macPipeAddress, BinaryFormat -> True]; (*read via cat, which is slower*)
+  {st, dim}
+];
+
+, (*Other OS version*)
 FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
   Module[{fps, startAtSec, st, dim, formatedFile},
   formatedFile =  "\"" ~~ file ~~ "\""; 
@@ -187,24 +165,13 @@ FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] :=
   {st, dim}
 ]
 
-(*makes a stream*)
+] (*end special case handling*)
+
+
+(*makes a stream with all the frames*)
 FFInputStreamAt[file_String, at_Integer, All] := 
-  Module[{fps, startAtSec, st, dim, formatedFile},
-  formatedFile = "\"" ~~ file ~~ "\"";
-  fps = FFImport[file, "FrameRate"];
-  dim = FFImport[file, "ImageSize"];
-  startAtSec = (at-1) / fps;
-  st = OpenRead["!" ~~ ffmpeg ~~ " -i " ~~ formatedFile ~~ 
-    " -ss " ~~ ToString@startAtSec ~~ (*  method too slow! *)
-    (*" -frames:v " ~~ ToString@noOfFrames ~~ *)
-    " -loglevel quiet" ~~ 
-    " -f image2pipe " ~~ 
-    " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~ 
-    " -vcodec rawvideo -", 
-    BinaryFormat -> True];
-    (* FFSkipFrame[st, dim, at-1]; *)
-  {st, dim}
-]
+  FFInputStreamAt[file, at, FFImport[file, "FrameCount"]];
+
 
 (*read one frame*)
 FFGetOneFrame[path_String, frame_Integer] := Module[ {st, dim, img},
