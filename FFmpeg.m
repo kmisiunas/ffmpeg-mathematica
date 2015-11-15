@@ -113,11 +113,14 @@ FFSkipFrame[stream_, dim_, n_Integer:1] :=
 
 (*makes a stream*)
 (* special handler for MAC because there is an error for M9+ with pipes*)
-If[ $OperatingSystem == "MacOSX",
+If[ $OperatingSystem == "MacOSX" && $VersionNumber >= 9,
 
 (*MAC OS X version*)
 (*most likely does not handle multiple files at the same time!!*)
 (*leaves pipe in /tmp/ folder *)
+(* TODO: still not working stability! *)
+Print["Warring! FFmpeg does not work well on Mathematica 9+ for Mac, because of pipe issues."];
+
 FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
   Module[{fps, startAtSec, st, dim, formatedFile, cmd},
   macPipeAddress =  "/tmp/pipeFFmpegToMathematica";
@@ -140,6 +143,7 @@ FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] :=
   KillProcess[process]; (*clean up last mess*)
   process = StartProcess[$SystemShell];
   WriteLine[process, cmd]; (*do not freeze the notebook*)
+  Pause[0.1];
   st = OpenRead[ "!cat " ~~ macPipeAddress, BinaryFormat -> True]; (*read via cat, which is slower*)
   {st, dim}
 ];
