@@ -20,7 +20,8 @@
 (*Version 1 (2014-05-07) - initial release. *)
 (*Version 2 (2014-08-21) - ffprobe and performace mode *)
 (*Version 3 (2015-03-09) - ffprobe no longer requires temporary files *)
-(*Version 4 (2015-03-09) - fix for mac os x, because streams used to break   *)
+(*Version 4 (2015-11-20) - fix for mac os x, because streams used to break (in touch with Wolfram)  *)
+(*Version 5 (2015-12-04) - ffmpeg with fast and accurate seek; ffprobe check with FFmpeg[]  *)
 
 
 (* ::Section:: *)
@@ -75,16 +76,17 @@ FFmpeg[path_String] := (ffmpeg = path;)
 (*returns status of ffmpeg.*)
 (*todo: on windows it responds, but does not checkout.*)
 FFmpeg[] := 
-  If[ !StringQ@ffmpeg,
-    Print @ "The path to ffmpeg is unknown. Use FFmpeg[\"path\"] to set it.",
-    (*second option - test if working*)
-    If[ StringMatchQ[ 
-        ToString @ ReadLine @ OpenRead["!" ~~ ffmpeg ~~ " -version", BinaryFormat -> True],
-        "ffmpeg version*"],
-      Print @ "ffmpeg was found and is functional",
-      Print @ ("ffmpeg does not respond correctly. Please check the path: " <> ToString@ffmpeg) 
-    ]
-  ]
+    (
+      If[ !StringQ@ffmpeg,
+        Print @ "The path to ffmpeg is unknown. Use FFmpeg[\"path\"] to set it.",
+        (*second option - test if working*)
+        If[ StringMatchQ[
+            ToString @ ReadLine @ OpenRead["!" ~~ ffmpeg ~~ " -version", BinaryFormat -> True],
+            "ffmpeg version*"],
+          Print @ "ffmpeg was found and is functional",
+          Print @ ("ffmpeg does not respond correctly. Please check the path: " <> ToString@ffmpeg)
+        ]
+      ]; FFprobe[]; )
 
 (*run on loading - default path*)
 Switch[ $OperatingSystem, 
@@ -114,63 +116,32 @@ FFSkipFrame[stream_, dim_, n_Integer:1] :=
 (*makes a stream*)
 (* special handler for MAC because there is an error for M9+ with pipes*)
 If[ $OperatingSystem == "MacOSX" && $VersionNumber >= 9,
+  (*MAC OS X version*)
+  (*most likely does not handle multiple files at the same time!!*)
+  (*leaves pipe in /tmp/ folder *)
+  (* TODO: still not working stability! *)
+  Print["Warring! FFmpeg does not work well on Mathematica 9+ for Mac, because of pipe issues."];
+]
 
-(*MAC OS X version*)
-(*most likely does not handle multiple files at the same time!!*)
-(*leaves pipe in /tmp/ folder *)
-(* TODO: still not working stability! *)
-Print["Warring! FFmpeg does not work well on Mathematica 9+ for Mac, because of pipe issues."];
-
-FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
-  Module[{fps, startAtSec, st, dim, formatedFile, cmd},
-  macPipeAddress =  "/tmp/pipeFFmpegToMathematica";
-  Run["rm " ~~ macPipeAddress];
-  Run["mkfifo " ~~ macPipeAddress]; (*make pipe*)
-  formatedFile =  "\"" ~~ file ~~ "\""; 
-  fps = FFImport[file, "FrameRate"];
-  dim = FFImport[file, "ImageSize"];
-  startAtSec = (at-1) / fps;
-  cmd = ffmpeg ~~ 
-    " -i " ~~ formatedFile ~~ 
-    " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
-    " -frames:v " ~~ ToString@noOfFrames ~~ 
-    " -loglevel quiet" ~~ 
-    " -f image2pipe " ~~  
-    " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~ 
-    " -vcodec rawvideo" ~~
-    " -y " ~~ (* overwrite file if there is a pipe already*)
-    macPipeAddress ; (*pipe the ffmpeg into new pipe/file*)
-  KillProcess[process]; (*clean up last mess*)
-  process = StartProcess[$SystemShell];
-  WriteLine[process, cmd]; (*do not freeze the notebook*)
-  Pause[0.1];
-  st = OpenRead[ "!cat " ~~ macPipeAddress, BinaryFormat -> True]; (*read via cat, which is slower*)
-  {st, dim}
-];
-
-, (*Other OS version*)
+(*makes a stream*)
 FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] := 
   Module[{fps, startAtSec, st, dim, formatedFile},
   formatedFile =  "\"" ~~ file ~~ "\""; 
   fps = FFImport[file, "FrameRate"];
   dim = FFImport[file, "ImageSize"];
   startAtSec = (at-1) / fps;
-  st = OpenRead["!" ~~ ffmpeg ~~ 
-    " -i " ~~ formatedFile ~~ 
-    " -ss " ~~ ToString@startAtSec ~~ (* method too slow!*)
-    " -frames:v " ~~ ToString@noOfFrames ~~ 
-    " -loglevel quiet" ~~ 
-    " -f image2pipe " ~~  
-    " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~ 
-    " -vcodec rawvideo" ~~
-    " - " , 
+  st = OpenRead["!" ~~ ffmpeg ~~
+      " -ss " ~~ ToString[startAtSec] ~~
+      " -i " ~~ formatedFile ~~
+      " -frames:v " ~~ ToString@noOfFrames ~~
+      " -loglevel quiet" ~~
+      " -f image2pipe " ~~
+      " -pix_fmt " ~~ OptionValue[FFmpeg, "ColorCommand"] ~~
+      " -vcodec rawvideo" ~~
+      " - " ,
     BinaryFormat -> True];
-    (* FFSkipFrame[st, dim, at-1]; *)
   {st, dim}
 ]
-
-] (*end special case handling*)
-
 
 (*makes a stream with all the frames*)
 FFInputStreamAt[file_String, at_Integer, All] := 
