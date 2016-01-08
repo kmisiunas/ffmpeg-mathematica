@@ -17,11 +17,12 @@
 
   Designed for B&W videos.
   *)
-(*Version 1 (2014-05-07) - initial release. *)
-(*Version 2 (2014-08-21) - ffprobe and performace mode *)
-(*Version 3 (2015-03-09) - ffprobe no longer requires temporary files *)
-(*Version 4 (2015-11-20) - fix for mac os x, because streams used to break (in touch with Wolfram)  *)
-(*Version 5 (2015-12-04) - ffmpeg with fast and accurate seek; ffprobe check with FFmpeg[]  *)
+(*Version 1   (2014-05-07) - initial release. *)
+(*Version 2   (2014-08-21) - ffprobe and performace mode *)
+(*Version 3   (2015-03-09) - ffprobe no longer requires temporary files *)
+(*Version 4   (2015-11-20) - fix for mac os x, because streams used to break (in touch with Wolfram)  *)
+(*Version 5   (2015-12-04) - ffmpeg with fast and accurate seek; ffprobe check with FFmpeg[]  *)
+(*Version 5.1 (2016-01-08) - Added "ImageList" support as with Import  *)
 
 
 (* ::Section:: *)
@@ -257,9 +258,15 @@ FFImport[path_String, elements_] := Switch[ elements,
   {"Frames", _Integer}, FFGetOneFrame[ path, elements[[2]] ],
   {"Frames", _List}, FFGetOneFrame[path, elements[[2]] ],
   {"Frames", _List, True}, FFGetOneFrameTest[path, elements[[2]] ], (*experimental*)
+  {"ImageList", _Integer}, FFGetOneFrame[ path, elements[[2]] ],
+  {"ImageList", _List}, FFGetOneFrame[path, elements[[2]] ],
   "FrameRate", FFGetFrameRate[path],
   "ImageSize", FFGetImageSize[path],
   "Duration", FFGetDuration[path],
+  {"FrameRate"}, FFGetFrameRate[path],
+  {"ImageSize"}, FFGetImageSize[path],
+  {"Duration"}, FFGetDuration[path],
+
   _, Import[path, elements]
 ];
 
