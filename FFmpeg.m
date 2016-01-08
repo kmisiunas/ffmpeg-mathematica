@@ -51,7 +51,7 @@ FFGetNextFrame::usage =
 FFSkipFrame::usage = 
   "FFSkipFrame[stream_, dim_, n_Integer:1] skips n frame of specified ffmpeg stream."
 
-
+FFImport::notSupported = "Command not supported by FFImport[], faling back to Import[]";
 
 (* options associated*)
 Options[FFmpeg] = { 
@@ -267,7 +267,7 @@ FFImport[path_String, elements_] := Switch[ elements,
   {"ImageSize"}, FFGetImageSize[path],
   {"Duration"}, FFGetDuration[path],
 
-  _, Import[path, elements]
+  _, Message[FFImport::notSupported, elements]; Import[path, elements]
 ];
 
 
