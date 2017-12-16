@@ -97,7 +97,8 @@ FFmpeg[] :=
 Switch[ $OperatingSystem, 
   "MacOSX",  FFmpeg @ "/usr/local/bin/ffmpeg", (*homebrew*)
   "Windows", FFmpeg @ "ffmpeg.exe",
-  "Linux",   FFmpeg @ "ffmpeg" ];
+  "Linux",   FFmpeg @ "ffmpeg",
+  "Unix",   FFmpeg @ "ffmpeg" ];
 
 
 (* ::Subsection::Closed:: *)
@@ -223,7 +224,8 @@ FFprobe[] :=
 Switch[ $OperatingSystem, 
   "MacOSX",  FFprobe @ "/usr/local/bin/ffprobe",
   "Windows", FFprobe @ "ffprobe.exe",
-  "Linux",   FFprobe @ "ffprobe"];
+  "Linux",   FFprobe @ "ffprobe",
+  "Unix",    FFprobe @ "ffprobe"];
 
 
 FFProbe[file_String, streamCodec_String, targetVariable_String] := 
