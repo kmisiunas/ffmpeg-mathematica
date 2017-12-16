@@ -40,6 +40,10 @@ FFmpeg::usage =
   "FFmpeg[] returns status of the plug-in. 
   If text argument is supplied it is assumed to be path to ffmpeg."
 
+FFprobe::usage = 
+  "FFprobe[] returns status of the plug-in. 
+  If text argument is supplied it is assumed to be path to ffmpeg."
+
 FFInputStreamAt::usage = 
   "FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] returns {data stream, dimensions}
   where \"file\" is the file to be read, \"at\" specifies first frame to read, 
@@ -246,7 +250,7 @@ FFGetDuration[file_String] := N @ FFProbe[file, "video", "duration"];
 
 FFGetImageSize[file_String] := FFProbe[file, "video", {"width","height"}];
 
-
+FFGetFrameCount[file_String] := Round[ FFGetFrameRate[file] * FFGetDuration[file] ];
 
 
 (* ::Subsection:: *)
@@ -263,6 +267,7 @@ FFImport[path_String, elements_] := Switch[ elements,
   "FrameRate", FFGetFrameRate[path],
   "ImageSize", FFGetImageSize[path],
   "Duration", FFGetDuration[path],
+  "FrameCount", FFGetFrameCount[path],
   {"FrameRate"}, FFGetFrameRate[path],
   {"ImageSize"}, FFGetImageSize[path],
   {"Duration"}, FFGetDuration[path],
