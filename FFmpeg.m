@@ -23,7 +23,7 @@
 (*Version 4   (2015-11-20) - fix for mac os x, because streams used to break (in touch with Wolfram)  *)
 (*Version 5   (2015-12-04) - ffmpeg with fast and accurate seek; ffprobe check with FFmpeg[]  *)
 (*Version 5.1 (2016-01-08) - Added "ImageList" support as with Import  *)
-
+(*Version 5.2 (2018-10-27) - Made method FFprobe public *)
 
 (* ::Section:: *)
 (* Package Declarations*)
@@ -41,8 +41,7 @@ FFmpeg::usage =
   If text argument is supplied it is assumed to be path to ffmpeg."
 
 FFprobe::usage = 
-  "FFprobe[] returns status of the plug-in. 
-  If text argument is supplied it is assumed to be path to ffmpeg."
+  "FFprobe[] returns status of ffprobe config. If string is passed, it will set the path."
 
 FFInputStreamAt::usage = 
   "FFInputStreamAt[file_String, at_Integer, noOfFrames_Integer] returns {data stream, dimensions}
@@ -97,8 +96,7 @@ FFmpeg[] :=
 Switch[ $OperatingSystem, 
   "MacOSX",  FFmpeg @ "/usr/local/bin/ffmpeg", (*homebrew*)
   "Windows", FFmpeg @ "ffmpeg.exe",
-  "Linux",   FFmpeg @ "ffmpeg",
-  "Unix",   FFmpeg @ "ffmpeg" ];
+  "Linux",   FFmpeg @ "ffmpeg" ];
 
 
 (* ::Subsection::Closed:: *)
@@ -224,8 +222,7 @@ FFprobe[] :=
 Switch[ $OperatingSystem, 
   "MacOSX",  FFprobe @ "/usr/local/bin/ffprobe",
   "Windows", FFprobe @ "ffprobe.exe",
-  "Linux",   FFprobe @ "ffprobe",
-  "Unix",    FFprobe @ "ffprobe"];
+  "Linux",   FFprobe @ "ffprobe"];
 
 
 FFProbe[file_String, streamCodec_String, targetVariable_String] := 
@@ -252,7 +249,7 @@ FFGetDuration[file_String] := N @ FFProbe[file, "video", "duration"];
 
 FFGetImageSize[file_String] := FFProbe[file, "video", {"width","height"}];
 
-FFGetFrameCount[file_String] := Round[ FFGetFrameRate[file] * FFGetDuration[file] ];
+
 
 
 (* ::Subsection:: *)
@@ -269,7 +266,6 @@ FFImport[path_String, elements_] := Switch[ elements,
   "FrameRate", FFGetFrameRate[path],
   "ImageSize", FFGetImageSize[path],
   "Duration", FFGetDuration[path],
-  "FrameCount", FFGetFrameCount[path],
   {"FrameRate"}, FFGetFrameRate[path],
   {"ImageSize"}, FFGetImageSize[path],
   {"Duration"}, FFGetDuration[path],
